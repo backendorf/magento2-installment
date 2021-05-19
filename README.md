@@ -23,7 +23,7 @@
 > - Configure price templates for the main catalog pages;
 
 ## Installation
-> - `composer require backendorf/installment`
+> - `composer require backendorf/module-installment`
 > - `bin/magento setup:upgrade && bin/magento setup:di:compile`
 > - Navigate to "Shop->Configuration->Backendorf->Installment" and configure the options.
 > - Clear the cache.
