@@ -1,0 +1,160 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="backendorf" sortOrder="999" translate="label">
+			<label>Backendorf</label>
+		</tab>
+		<section id="backendorf_installment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label">
+			<label>Installment</label>
+			<tab>backendorf</tab>
+			<resource>Backendorf_Installment::config_backendorf_installment</resource>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label">
+				<label>General</label>
+				<field id="is_enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="maximum_quantity_installments" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="select">
+					<label>Maximum quantity installments</label>
+					<comment/>
+					<source_model>Backendorf\Installment\Model\Config\Source\MaximumQuantityInstallments</source_model>
+				</field>
+				<field id="minimum_installment_value" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label" type="text">
+					<label>Minimum installment value</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="show_all_installments_on_product_page" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4" translate="label" type="select">
+					<label>Show all installments on product page</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_first_installment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
+					<label>Show the first installment</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="best_installment_in_cart" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
+                    <label>Best installment in cart</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+			</group>
+			<group id="interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label">
+				<label>Interest</label>
+				<field id="type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
+					<label>Interest type</label>
+					<comment/>
+					<source_model>Backendorf\Installment\Model\Config\Source\InterestType</source_model>
+				</field>
+				<field id="interest_2" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label" type="text">
+					<label>2x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_3" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4" translate="label" type="text">
+					<label>3x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_4" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="text">
+					<label>4x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_5" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="text">
+					<label>5x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_6" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="7" translate="label" type="text">
+					<label>6x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_7" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="8" translate="label" type="text">
+					<label>7x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_8" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="9" translate="label" type="text">
+					<label>8x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_9" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>9x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_10" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>10x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_11" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="text">
+					<label>11x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+				<field id="interest_12" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="text">
+					<label>12x</label>
+					<validate>required-entry validate-currency-dollar</validate>
+					<comment/>
+				</field>
+			</group>
+			<group id="discounts" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label">
+				<label>Discounts</label>
+				<field id="discounts" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Discount</label>
+					<frontend_model>Backendorf\Installment\Block\Adminhtml\Form\Field\Discounts</frontend_model>
+					<backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+				</field>
+			</group>
+			<group id="price_templates" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Price Templates</label>
+				<field id="catalog_category_view" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="textarea" canRestore="1">
+					<label>On Category Page</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Options: {{default}}{{qty}}{{value}}{{interest}}{{discounts}}]]></comment>
+				</field>
+				<field id="catalogsearch_result_index" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="textarea" canRestore="1">
+					<label>On Search Results</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Options: {{default}}{{qty}}{{value}}{{interest}}{{discounts}}]]></comment>
+				</field>
+				<field id="catalog_product_view" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label" type="textarea" canRestore="1">
+					<label>On Product View</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Options: {{default}}{{qty}}{{value}}{{interest}}{{discounts}}]]></comment>
+				</field>
+				<field id="discount_template" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4" translate="label" type="textarea" canRestore="1">
+					<label>Discount Template</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Options: {{valueWithDiscount}}{{percentage}}{{name}}]]></comment>
+				</field>
+                <field id="in_cart_template" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="textarea" canRestore="1">
+					<label>In Cart Template</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Options: {{qty}}{{value}}{{interest}}]]></comment>
+				</field>
+				<field id="all_installment_template" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="textarea" canRestore="1">
+					<label>All Installment Template</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Options: {{qty}}{{value}}{{interest}}]]></comment>
+				</field>
+                <field id="text_with_interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="textarea" canRestore="1">
+					<label>Text with interest</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Options: {{rate}} {{amount}} {{total_interest}} ]]></comment>
+				</field>
+                <field id="text_free_interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="textarea" canRestore="1">
+					<label>Text free interest</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Options: {{rate}} {{amount}} {{total_interest}} ]]></comment>
+				</field>
+            </group>
+		</section>
+	</system>
+</config>

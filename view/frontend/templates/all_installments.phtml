@@ -1,0 +1,29 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var Backendorf\Installment\Block\AllInstallments $block */
+
+if ($block->renderAllInstallments()) {
+    ?>
+    <div class="wrap-collabsible backendorf-installment">
+        <input id="collapsible" class="toggle" type="checkbox">
+        <label for="collapsible" class="lbl-toggle installments title">
+            <i class="fa fa-credit-card" style="margin-right: 10px;"></i>
+            <?php echo __('See more installment options') ?>
+        </label>
+        <div class="collapsible-content">
+            <div class="content-inner">
+                <div data-role="content">
+                    <div class="all-installments-content">
+                        <h3>
+                            <?php echo __('Calculating...'); ?>
+                        </h3>
+                    </div>
+                    <span class="footer-message"><?php echo __('The values presented are for consultation only, the real value of the parcel will be displayed at the end of the order.') ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
