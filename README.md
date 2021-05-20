@@ -2,6 +2,8 @@
 # Backendorf Installment
 **Version 1.0.0**
 
+https://davibackendorf.github.io/parcelamento-m2
+
 ## Description
  Basically, this module makes it possible to display the installment values and discounts on the frontend.
 
