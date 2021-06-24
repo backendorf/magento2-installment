@@ -8,37 +8,38 @@
  *
  * @author    Davi Backendorf <davijacksonb@gmail.com>
  */
+
 define([
     'jquery',
     'Magento_Catalog/js/price-utils',
     'underscore',
-    'mage/template'
+    'mage/template',
+    'jquery/ui'
 ], function ($, utils, _, mageTemplate) {
     'use strict';
 
-    var widgetMixin = {
-        reloadPrice: function reDrawPrices() {
-            var priceFormat = (this.options.priceConfig && this.options.priceConfig.priceFormat) || {},
-                priceTemplate = mageTemplate(this.options.priceTemplate);
+    return function (widget) {
+        $.widget('mage.priceBox', widget,
+            {
+                reloadPrice: function reDrawPrices() {
+                    var priceFormat = (this.options.priceConfig && this.options.priceConfig.priceFormat) || {},
+                        priceTemplate = mageTemplate(this.options.priceTemplate);
 
-            _.each(this.cache.displayPrices, function (price, priceCode) {
-                price.final = _.reduce(price.adjustments, function (memo, amount) {
-                    return memo + amount;
-                }, price.amount);
+                    _.each(this.cache.displayPrices, function (price, priceCode) {
+                        price.final = _.reduce(price.adjustments, function (memo, amount) {
+                            return memo + amount;
+                        }, price.amount);
 
-                price.formatted = utils.formatPrice(price.final, priceFormat);
+                        price.formatted = utils.formatPrice(price.final, priceFormat);
 
-                $('[data-price-type="' + priceCode + '"]', this.element).html(priceTemplate({
-                    data: price
-                }));
-                let element = this.element;
-                $('body').trigger('afterReloadPrice', {price, element});
-            }, this);
-        }
-    };
-
-    return function (targetWidget) {
-        $.widget('mage.priceBox', targetWidget, widgetMixin);
+                        $('[data-price-type="' + priceCode + '"]', this.element).html(priceTemplate({
+                            data: price
+                        }));
+                        let element = this.element;
+                        $('body').trigger('afterReloadPrice', {price, element});
+                    }, this);
+                }
+            });
         return $.mage.priceBox;
-    };
+    }
 });

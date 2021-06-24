@@ -40,6 +40,7 @@ define([
         _create: function () {
             let widget = this;
             console.info(widget.options);
+            localStorage.setItem('all_product_prices', JSON.stringify([]));
 
             if (this.options.enabled) {
                 try {
@@ -51,10 +52,14 @@ define([
 
                         $('body').on('afterReloadPrice', function (e, data) {
                             if (!$(data.element).hasClass('price-tier_price')) {
-                                widget.renderPrices(data.element, data.price);
+                                let lowestPrice = widget.getLowestPrice({
+                                    product_id: $(data.element).attr('data-product-id'),
+                                    price: data.price.final
+                                });
+                                widget.renderPrices(data.element, {amount: lowestPrice.price});
 
                                 if ($(data.element).parents('.product-info-price').length > 0) {
-                                    widget.updateAllInstallments(data.element, data.price);
+                                    widget.updateAllInstallments(data.element, {amount: lowestPrice.price});
                                 }
                             }
                         });
@@ -71,6 +76,28 @@ define([
                     console.info(e);
                 }
             }
+        },
+        getLowestPrice: function (price) {
+            let prices = JSON.parse(localStorage.getItem('all_product_prices'));
+
+            prices.push({
+                product_id: price.product_id,
+                price: price.price
+            })
+
+            let lowest = {
+                product_id: price.product_id,
+                price: price.price
+            };
+
+            for (let i in prices) {
+                if (prices[i].product_id === price.product_id && prices[i].price < lowest.price) {
+                    lowest = prices[i];
+                }
+            }
+
+            localStorage.setItem('all_product_prices', JSON.stringify(prices));
+            return lowest;
         },
         initPricesInCart: function () {
             $('#cart-totals .backendorf-installment').remove();
