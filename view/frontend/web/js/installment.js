@@ -51,15 +51,22 @@ define([
                         }
 
                         $('body').on('afterReloadPrice', function (e, data) {
+                            console.info('afterReloadPrice');
                             if (!$(data.element).hasClass('price-tier_price')) {
-                                let lowestPrice = widget.getLowestPrice({
-                                    product_id: $(data.element).attr('data-product-id'),
-                                    price: data.price.final
-                                });
-                                widget.renderPrices(data.element, {amount: lowestPrice.price});
+                                let lowestPrice = 0;
+                                if ($('[class*="swatch-opt"] ').length == 0) {
+                                    lowestPrice = widget.getLowestPrice({
+                                        product_id: $(data.element).attr('data-product-id'),
+                                        price: data.price.final
+                                    });
+                                } else {
+                                    lowestPrice = data.price.final;
+                                }
+
+                                widget.renderPrices(data.element, {amount: lowestPrice});
 
                                 if ($(data.element).parents('.product-info-price').length > 0) {
-                                    widget.updateAllInstallments(data.element, {amount: lowestPrice.price});
+                                    widget.updateAllInstallments(data.element, {amount: lowestPrice});
                                 }
                             }
                         });
@@ -97,7 +104,7 @@ define([
             }
 
             localStorage.setItem('all_product_prices', JSON.stringify(prices));
-            return lowest;
+            return lowest.price;
         },
         initPricesInCart: function () {
             $('#cart-totals .backendorf-installment').remove();
