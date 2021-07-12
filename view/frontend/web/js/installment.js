@@ -40,36 +40,24 @@ define([
         _create: function () {
             let widget = this;
             console.info(widget.options);
-            localStorage.setItem('all_product_prices', JSON.stringify([]));
 
             if (this.options.enabled) {
                 try {
+                    $('body').on('afterReloadPrice', function (e, data) {
+                        if (!$(data.element).hasClass('price-tier_price')) {
+                            widget.renderPrices(data.element, {amount: data.price.final});
+
+                            if ($(data.element).parents('.product-info-price').length > 0) {
+                                widget.updateAllInstallments(data.element, {amount: data.price.final});
+                            }
+                        }
+                    });
+
                     $('.price-box.price-final_price').each(function (i, element) {
                         widget.renderPrices(element);
                         if ($(element).parents('.product-info-price').length > 0) {
                             widget.updateAllInstallments(element);
                         }
-
-                        $('body').on('afterReloadPrice', function (e, data) {
-                            console.info('afterReloadPrice');
-                            if (!$(data.element).hasClass('price-tier_price')) {
-                                let lowestPrice = 0;
-                                if ($('[class*="swatch-opt"] ').length == 0) {
-                                    lowestPrice = widget.getLowestPrice({
-                                        product_id: $(data.element).attr('data-product-id'),
-                                        price: data.price.final
-                                    });
-                                } else {
-                                    lowestPrice = data.price.final;
-                                }
-
-                                widget.renderPrices(data.element, {amount: lowestPrice});
-
-                                if ($(data.element).parents('.product-info-price').length > 0) {
-                                    widget.updateAllInstallments(data.element, {amount: lowestPrice});
-                                }
-                            }
-                        });
                     });
 
                     if (this.options.best_installment_in_cart && $('#cart-totals').length > 0 && window.checkoutConfig.quoteData) {
@@ -83,28 +71,6 @@ define([
                     console.info(e);
                 }
             }
-        },
-        getLowestPrice: function (price) {
-            let prices = JSON.parse(localStorage.getItem('all_product_prices'));
-
-            prices.push({
-                product_id: price.product_id,
-                price: price.price
-            })
-
-            let lowest = {
-                product_id: price.product_id,
-                price: price.price
-            };
-
-            for (let i in prices) {
-                if (prices[i].product_id === price.product_id && prices[i].price < lowest.price) {
-                    lowest = prices[i];
-                }
-            }
-
-            localStorage.setItem('all_product_prices', JSON.stringify(prices));
-            return lowest.price;
         },
         initPricesInCart: function () {
             $('#cart-totals .backendorf-installment').remove();
@@ -340,7 +306,7 @@ define([
          * @returns {number}
          */
         getElmPrice: function (elm) {
-            return parseFloat($(elm).find('.price-wrapper').attr('data-price-amount'));
+            return parseFloat($(elm).find('.price-wrapper[data-price-type="finalPrice"]').attr('data-price-amount'));
         },
         /**
          *

@@ -35,8 +35,12 @@ define([
                         $('[data-price-type="' + priceCode + '"]', this.element).html(priceTemplate({
                             data: price
                         }));
-                        let element = this.element;
-                        $('body').trigger('afterReloadPrice', {price, element});
+                        if (priceCode == 'finalPrice') {
+                            let element = this.element;
+                            setTimeout(function () {
+                                $('body').trigger('afterReloadPrice', {price, element});
+                            }, 800);
+                        }
                     }, this);
                 }
             });
