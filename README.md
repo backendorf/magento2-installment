@@ -1,4 +1,5 @@
 
+
 # Backendorf Installment
 **Version 1.0.3**
 
@@ -29,3 +30,8 @@ For more details -> https://davibackendorf.github.io/parcelamento-m2
 > - `bin/magento setup:upgrade && bin/magento setup:di:compile`
 > - Navigate to "Shop->Configuration->Backendorf->Installment" and configure the options.
 > - Clear the cache.
+
+
+## Donation
+
+[Clique aqui para fazer uma doação](https://www.paypal.com/donate?business=RDQ4VDNPKJKB8&no_recurring=0&currency_code=BRL)
