@@ -34,4 +34,4 @@ For more details -> https://davibackendorf.github.io/parcelamento-m2
 
 ## Donation
 
-[Clique aqui para fazer uma doação](https://www.paypal.com/donate?business=RDQ4VDNPKJKB8&no_recurring=0&currency_code=BRL)
+[Click here to make a donation](https://www.paypal.com/donate?business=RDQ4VDNPKJKB8&no_recurring=0&currency_code=BRL)
