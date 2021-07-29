@@ -13,8 +13,9 @@ define([
     "jquery",
     'Magento_Catalog/js/price-utils',
     'mage/translate',
-    'Magento_Customer/js/customer-data'
-], function ($, priceUtils, $t, customerData) {
+    'Magento_Customer/js/customer-data',
+    'Magento_Checkout/js/model/totals'
+], function ($, priceUtils, $t, customerData, totals) {
     'use strict';
     $.widget('mage.installment', {
         'options': {
@@ -74,7 +75,7 @@ define([
         },
         initPricesInCart: function () {
             $('#cart-totals .backendorf-installment').remove();
-            let price = this.getSubtotal();
+            let price = this.getTotal();
             let installments = this.getInstallments(price);
             if (installments) {
                 let bestInstallment = this.getBestInstallment(installments);
@@ -312,8 +313,9 @@ define([
          *
          * @returns {number}
          */
-        getSubtotal: function () {
-            return parseFloat(window.checkoutConfig.quoteData.subtotal_with_discount);
+        getTotal: function () {
+            let shippingTotal = (totals.totals()['shipping_amount']) ? parseFloat(totals.totals()['shipping_amount']) : 0;
+            return parseFloat(window.checkoutConfig.quoteData.subtotal_with_discount) + shippingTotal;
         },
         /**
          * @param price
