@@ -39,7 +39,6 @@ define([
         },
         _create: function () {
             let widget = this;
-            console.info(widget.options);
 
             if (this.options.enabled) {
                 try {
@@ -60,11 +59,14 @@ define([
                         }
                     });
 
-                    if (this.options.best_installment_in_cart && $('#cart-totals').length > 0 && window.checkoutConfig.quoteData) {
+                    if (this.options.best_installment_in_cart && $('#cart-totals').length > 0) {
                         widget.initPricesInCart();
-
-                        customerData.get('cart').subscribe(function () {
-                            widget.initPricesInCart();
+                        require([
+                            'Magento_Checkout/js/model/quote'
+                        ], function (quote) {
+                            quote.totals.subscribe(function (data) {
+                                widget.initPricesInCart(data.grand_total);
+                            });
                         });
                     }
                 } catch (e) {
@@ -72,19 +74,22 @@ define([
                 }
             }
         },
-        initPricesInCart: function () {
+        initPricesInCart: function (total = null) {
             $('#cart-totals .backendorf-installment').remove();
-            let price = this.getSubtotal();
-            let installments = this.getInstallments(price);
-            if (installments) {
-                let bestInstallment = this.getBestInstallment(installments);
-                const template = this.options.templates.in_cart_template;
+            total = (total) ? total : this.getTotal();
+            if (total) {
+                let installments = this.getInstallments(total);
+                if (installments) {
+                    let bestInstallment = this.getBestInstallment(installments);
+                    const template = this.options.templates.in_cart_template;
 
-                let html = template.replace('{{qty}}', bestInstallment.installments_qty)
-                    .replace('{{value}}', bestInstallment.installment_value)
-                    .replace('{{interest}}', (this.renderInterest(bestInstallment)))
-                $('#cart-totals').append('<div class="backendorf-installment">' + html + '</div>');
+                    let html = template.replace('{{qty}}', bestInstallment.installments_qty)
+                        .replace('{{value}}', bestInstallment.installment_value)
+                        .replace('{{interest}}', (this.renderInterest(bestInstallment)))
+                    $('#cart-totals').append('<div class="backendorf-installment">' + html + '</div>');
+                }
             }
+
         },
         /**
          *
@@ -175,8 +180,6 @@ define([
                 }
             });
 
-            console.info('json_installments');
-            console.info(json_installments);
             return json_installments;
         },
         /**
@@ -276,6 +279,7 @@ define([
             let template = this.getTemplate();
             let price = (prices) ? prices.amount : this.getElmPrice(priceElement);
             let installments = this.getInstallments(price);
+
             if (installments) {
                 let data = {
                     'bestInstallment': this.getBestInstallment(installments),
@@ -306,14 +310,27 @@ define([
          * @returns {number}
          */
         getElmPrice: function (elm) {
-            return parseFloat($(elm).find('.price-wrapper[data-price-type="finalPrice"]').attr('data-price-amount'));
+            let price = 0;
+            price = ($(elm).find('.price-wrapper[data-price-type="finalPrice"]').length > 0) ?
+                parseFloat($(elm).find('.price-wrapper[data-price-type="finalPrice"]').attr('data-price-amount')) : 0;
+
+            if (price === 0) {
+                price = ($(elm).find('.price-to .price-wrapper').length > 0) ? parseFloat($(elm).find('.price-to .price-wrapper').attr('data-price-amount')) : 0;
+            }
+            return price;
         },
         /**
          *
          * @returns {number}
          */
-        getSubtotal: function () {
-            return parseFloat(window.checkoutConfig.quoteData.subtotal_with_discount);
+        getTotal: function () {
+            let grandtotal = 0;
+            let cartData = customerData.get('cart-data')();
+
+            if (cartData.totals && cartData.totals.base_grand_total) {
+                grandtotal = parseFloat(cartData.totals.base_grand_total);
+            }
+            return grandtotal;
         },
         /**
          * @param price
