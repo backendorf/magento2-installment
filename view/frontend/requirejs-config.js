@@ -18,7 +18,7 @@ var config = {
         mixins: {
             'Magento_Catalog/js/price-box': {
                 'Backendorf_Installment/js/price-box-mixin': true
-            },
+            }
         }
     }
 };
