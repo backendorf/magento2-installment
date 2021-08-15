@@ -37,9 +37,7 @@ define([
                         }));
                         if (priceCode == 'finalPrice') {
                             let element = this.element;
-                            setTimeout(function () {
-                                $('body').trigger('afterReloadPrice', {price, element});
-                            }, 800);
+                            $('body').trigger('afterReloadPrice', {price, element});
                         }
                     }, this);
                 }
