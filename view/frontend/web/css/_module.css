@@ -1,0 +1,96 @@
+.wrap-collabsible {
+    margin-bottom: 16px;
+}
+.wrap-collabsible input[type='checkbox'] {
+    display: none;
+}
+.lbl-toggle {
+    background-color: #0098d4;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    display: block;
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.25s ease-out;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+.lbl-toggle::after {
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid white;
+    border-top: 5px solid transparent;
+    content: ' ';
+    display: inline-block;
+    margin-right: .7rem;
+    margin-top: 5px;
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-out;
+    vertical-align: middle;
+    float: right;
+}
+.toggle:checked + .lbl-toggle {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.toggle:checked + .lbl-toggle::after {
+    transform: rotate(90deg) translateX(-3px);
+}
+.toggle:checked + .lbl-toggle + .collapsible-content {
+    max-height: min-content;
+}
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-in-out;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+.collapsible-content .content-inner {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    padding: .5rem 1rem;
+}
+.backendorf-installment .best-installment {
+    color: black;
+    font-weight: 500;
+    margin: 5px 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.backendorf-installment .best-installment strong {
+    color: #0098d4;
+}
+.backendorf-installment .footer-message {
+    color: #a9a9a9;
+    font-size: 9px;
+    line-height: 1.2;
+}
+.backendorf-installment .installments.title {
+    font-size: 12px;
+}
+.backendorf-installment .installments-options {
+    font-size: 1.1em;
+    padding: 5px 10px;
+}
+.backendorf-installment .installments-options .installment-option {
+    list-style: none;
+    margin: 5px 0;
+}
+.backendorf-installment .installments-options .installment-option strong {
+    color: #0098d4;
+}
+.backendorf-installment .installments-options .installment-option span {
+    font-size: 13px;
+}
+.backendorf-installment .discounts .item strong {
+    color: #0098d4;
+}
+.backendorf-installment .discounts ul {
+    list-style: none;
+    padding: 0;
+}

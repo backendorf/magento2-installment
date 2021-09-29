@@ -1,7 +1,7 @@
 
 
 # Backendorf Installment
-**Version 1.0.6**
+**Version 1.0.7**
 
 For more details -> https://davibackendorf.github.io/parcelamento-m2
 
