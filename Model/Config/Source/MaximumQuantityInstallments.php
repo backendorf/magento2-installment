@@ -1,24 +1,10 @@
 <?php
-
-/**
- * MaximumQuantityInstallments | Backendorf
- *
- * @category  Backendorf
- * @package   MaximumQuantityInstallments.php
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Backendorf\Installment\Model\Config\Source;
 
 use \Magento\Framework\Option\ArrayInterface;
 
-/**
- * Class MaximumQuantityInstallments
- * @package Backendorf\Installment\Model\Config\Source
- */
 class MaximumQuantityInstallments implements ArrayInterface
 {
 

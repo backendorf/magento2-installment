@@ -1,14 +1,3 @@
-/*
- * price-box-mixin | Backendorf
- *
- * @category  Backendorf
- * @package   price-box-mixin.js
- *
- * @copyright Copyright (c) 2021 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
-
 define([
     'jquery',
     'Magento_Catalog/js/price-utils',
@@ -22,7 +11,7 @@ define([
         $.widget('mage.priceBox', widget,
             {
                 reloadPrice: function reDrawPrices() {
-                    var priceFormat = (this.options.priceConfig && this.options.priceConfig.priceFormat) || {},
+                    let priceFormat = (this.options.priceConfig && this.options.priceConfig.priceFormat) || {},
                         priceTemplate = mageTemplate(this.options.priceTemplate);
 
                     _.each(this.cache.displayPrices, function (price, priceCode) {
@@ -35,7 +24,8 @@ define([
                         $('[data-price-type="' + priceCode + '"]', this.element).html(priceTemplate({
                             data: price
                         }));
-                        if (priceCode == 'finalPrice') {
+
+                        if (priceCode === 'finalPrice') {
                             let element = this.element;
                             $('body').trigger('afterReloadPrice', {price, element});
                         }

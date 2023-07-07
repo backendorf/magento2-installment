@@ -1,15 +1,5 @@
 <?php
-
-/**
- * ConfigProvider | Backendorf
- *
- * @category  Backendorf
- * @package   ConfigProvider.php
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Backendorf\Installment\Model\Config;
 
@@ -21,44 +11,39 @@ use \Magento\Framework\Unserialize\Unserialize;
 use \Magento\Store\Model\ScopeInterface;
 use \Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class ConfigProvider
- * @package Backendorf\Installment\Model\Config
- */
 class ConfigProvider
 {
     /**
      * @var StoreManagerInterface
      */
-    protected $_storeManager;
+    protected StoreManagerInterface $_storeManager;
 
     /**
      * @var Path
      */
-    protected $_configPath;
+    protected Path $_configPath;
 
     /**
      * @var ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    protected ScopeConfigInterface $_scopeConfig;
 
     /**
      * @var Config
      */
-    protected $_resourceConfig;
+    protected Config $_resourceConfig;
 
     /**
      * @var Unserialize
      */
-    protected $_unserialize;
+    protected Unserialize $_unserialize;
 
     /**
      * @var Json
      */
-    private $_serializerJson;
+    private Json $_serializerJson;
 
     /**
-     * ConfigProvider constructor.
      * @param StoreManagerInterface $StoreManager
      * @param ScopeConfigInterface $ScopeConfig
      * @param Path $ConfigPath
@@ -68,12 +53,13 @@ class ConfigProvider
      */
     function __construct(
         StoreManagerInterface $StoreManager,
-        ScopeConfigInterface $ScopeConfig,
-        Path $ConfigPath,
-        Config $ResourceConfig,
-        Unserialize $Unserialize,
-        Json $SerializerJson
-    ) {
+        ScopeConfigInterface  $ScopeConfig,
+        Path                  $ConfigPath,
+        Config                $ResourceConfig,
+        Unserialize           $Unserialize,
+        Json                  $SerializerJson
+    )
+    {
         $this->_storeManager = $StoreManager;
         $this->_configPath = $ConfigPath;
         $this->_scopeConfig = $ScopeConfig;
@@ -187,9 +173,9 @@ class ConfigProvider
 
     /**
      * @param string $configPath
-     * @return mixed|null
+     * @return mixed
      */
-    private function getConfigValue(string $configPath)
+    private function getConfigValue(string $configPath): mixed
     {
         $storeId = $this->getStoreId();
         if (!$storeId) {
@@ -206,7 +192,7 @@ class ConfigProvider
     /**
      * @return int|null
      */
-    private function getStoreId(): ?int
+    private function getStoreId()
     {
         try {
             return $this->_storeManager->getStore()->getStoreId();
