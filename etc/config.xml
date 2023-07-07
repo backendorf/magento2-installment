@@ -1,40 +1,48 @@
 <?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-	<default>
-		<backendorf_installment>
-			<general>
-				<is_enabled>1</is_enabled>
-				<maximum_quantity_installments>12</maximum_quantity_installments>
-				<minimum_installment_value>5</minimum_installment_value>
-				<show_all_installments_on_product_page>1</show_all_installments_on_product_page>
-				<show_first_installment>0</show_first_installment>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <backendorf_installment>
+            <general>
+                <is_enabled>1</is_enabled>
+                <maximum_quantity_installments>12</maximum_quantity_installments>
+                <minimum_installment_value>5</minimum_installment_value>
+                <show_all_installments_on_product_page>1</show_all_installments_on_product_page>
+                <show_first_installment>0</show_first_installment>
                 <best_installment_in_cart>1</best_installment_in_cart>
-			</general>
-			<interest>
-				<type/>
-				<interest_2>0</interest_2>
-				<interest_3>0</interest_3>
-				<interest_4>0</interest_4>
-				<interest_5>0</interest_5>
-				<interest_6>0</interest_6>
-				<interest_7>0</interest_7>
-				<interest_8>0</interest_8>
-				<interest_9>0</interest_9>
-				<interest_10>0</interest_10>
-				<interest_11>0</interest_11>
-				<interest_12>0</interest_12>
-			</interest>
-			<discounts/>
+            </general>
+            <interest>
+                <type/>
+                <interest_2>0</interest_2>
+                <interest_3>0</interest_3>
+                <interest_4>0</interest_4>
+                <interest_5>0</interest_5>
+                <interest_6>0</interest_6>
+                <interest_7>0</interest_7>
+                <interest_8>0</interest_8>
+                <interest_9>0</interest_9>
+                <interest_10>0</interest_10>
+                <interest_11>0</interest_11>
+                <interest_12>0</interest_12>
+            </interest>
+            <discounts/>
             <price_templates>
-                <catalog_category_view><![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalog_category_view>
-                <catalogsearch_result_index><![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalogsearch_result_index>
-                <catalog_product_view><![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalog_product_view>
-                <discount_template><![CDATA[<strong>{{valueWithDiscount}}</strong> {{percentage}} no {{name}}]]></discount_template>
-                <in_cart_template><![CDATA[Em <strong>{{qty}}X</strong> de <strong>{{value}}</strong> {{interest}}]]></in_cart_template>
-				<all_installment_template><![CDATA[Em <strong>{{qty}}x</strong> de <strong>{{value}}</strong> {{interest}}]]></all_installment_template>
-				<text_with_interest><![CDATA[<span>(taxa de {{rate}} = {{total_interest}}, totalizando {{amount}})</span>]]></text_with_interest>
-				<text_free_interest><![CDATA[<span>sem juros</span>]]></text_free_interest>
-			</price_templates>
-		</backendorf_installment>
-	</default>
+                <catalog_category_view>
+                    <![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalog_category_view>
+                <catalogsearch_result_index>
+                    <![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalogsearch_result_index>
+                <catalog_product_view>
+                    <![CDATA[{{default}} <strong>{{qty}}X</strong> de <strong>{{value}}</strong>{{interest}} {{discounts}}]]></catalog_product_view>
+                <discount_template>
+                    <![CDATA[<strong>{{valueWithDiscount}}</strong> {{percentage}} no {{name}}]]></discount_template>
+                <in_cart_template>
+                    <![CDATA[Em <strong>{{qty}}X</strong> de <strong>{{value}}</strong> {{interest}}]]></in_cart_template>
+                <all_installment_template>
+                    <![CDATA[Em <strong>{{qty}}x</strong> de <strong>{{value}}</strong> {{interest}}]]></all_installment_template>
+                <text_with_interest>
+                    <![CDATA[<span>(taxa de {{rate}} = {{total_interest}}, totalizando {{amount}})</span>]]></text_with_interest>
+                <text_free_interest><![CDATA[<span>sem juros</span>]]></text_free_interest>
+            </price_templates>
+        </backendorf_installment>
+    </default>
 </config>

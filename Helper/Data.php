@@ -1,15 +1,5 @@
 <?php
-
-/**
- * Data | Backendorf
- *
- * @category  Backendorf
- * @package   Data.php
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Backendorf\Installment\Helper;
 
@@ -18,33 +8,29 @@ use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
 use \Magento\Framework\Pricing\PriceCurrencyInterface;
 
-/**
- * Class Data
- * @package Backendorf\Installment\Helper
- */
 class Data extends AbstractHelper
 {
     /**
      * @var ConfigProvider
      */
-    protected $_configProvider;
+    protected ConfigProvider $_configProvider;
 
     /**
      * @var PriceCurrencyInterface
      */
-    protected $_priceCurrency;
+    protected PriceCurrencyInterface $_priceCurrency;
 
     /**
-     * Data constructor.
      * @param Context $context
      * @param ConfigProvider $ConfigProvider
      * @param PriceCurrencyInterface $PriceCurrency
      */
     public function __construct(
-        Context $context,
-        ConfigProvider $ConfigProvider,
+        Context                $context,
+        ConfigProvider         $ConfigProvider,
         PriceCurrencyInterface $PriceCurrency
-    ) {
+    )
+    {
         parent::__construct($context);
         $this->_configProvider = $ConfigProvider;
         $this->_priceCurrency = $PriceCurrency;
@@ -56,10 +42,10 @@ class Data extends AbstractHelper
     public function getConfig(): array
     {
         $config = [];
-        $config['enabled'] = (boolean)$this->_configProvider->isModuleEnable();
+        $config['enabled'] = $this->_configProvider->isModuleEnable();
         $config['interest_type'] = $this->_configProvider->getInterestType();
-        $config['maximum_quantity_installments'] = (int)$this->_configProvider->getMaximumQuantityInstallments();
-        $config['minimum_installment_value'] = (double)$this->_configProvider->getMinimumInstallmentValue();
+        $config['maximum_quantity_installments'] = $this->_configProvider->getMaximumQuantityInstallments();
+        $config['minimum_installment_value'] = $this->_configProvider->getMinimumInstallmentValue();
         $config['discounts'] = $this->_configProvider->getDiscounts();
         $config['best_installment_in_cart'] = $this->_configProvider->bestInstallmentInCart();
         $config['interest'] = [];

@@ -2,7 +2,6 @@
     "name": "backendorf/module-installment",
     "description": "Add installment feature to Magento 2",
     "type": "magento2-module",
-    "license": "MIT",
     "authors": [
         {
             "email": "davijacksonb@gmail.com",

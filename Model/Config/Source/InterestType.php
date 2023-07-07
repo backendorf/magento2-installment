@@ -1,27 +1,12 @@
 <?php
-
-/**
- * InterestType | Backendorf
- *
- * @category  Backendorf
- * @package   InterestType.php
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Backendorf\Installment\Model\Config\Source;
 
 use \Magento\Framework\Option\ArrayInterface;
 
-/**
- * Class InterestType
- * @package Backendorf\Installment\Model\Config\Source
- */
 class InterestType implements ArrayInterface
 {
-
     /**
      * @return array[]
      */

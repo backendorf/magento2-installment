@@ -1,14 +1,3 @@
-/*
- * installment | Backendorf
- *
- * @category  Backendorf
- * @package   installment.js
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
-
 define([
     "jquery",
     'Magento_Catalog/js/price-utils',
@@ -120,7 +109,6 @@ define([
             }
 
             let max_div = (productPrice / min_installment);
-            max_div = parseInt(max_div);
 
             if (max_div > max_installment) {
                 max_div = max_installment;
@@ -237,7 +225,8 @@ define([
         },
         /**
          *
-         * @param installments
+         * @param priceElement
+         * @param prices
          */
         updateAllInstallments: function (priceElement, prices = null) {
             let price = (prices) ? prices.amount : this.getElmPrice(priceElement);
@@ -324,13 +313,13 @@ define([
          * @returns {number}
          */
         getTotal: function () {
-            let grandtotal = 0;
+            let grandTotal = 0;
             let cartData = customerData.get('cart-data')();
 
             if (cartData.totals && cartData.totals.base_grand_total) {
-                grandtotal = parseFloat(cartData.totals.base_grand_total);
+                grandTotal = parseFloat(cartData.totals.base_grand_total);
             }
-            return grandtotal;
+            return grandTotal;
         },
         /**
          * @param price

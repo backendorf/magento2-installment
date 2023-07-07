@@ -1,14 +1,5 @@
 <?php
-/**
- * AllInstallments | Backendorf
- *
- * @category  Backendorf
- * @package   AllInstallments.php
- *
- * @copyright Copyright (c) 2020 Backendorf - Magento Developer.
- *
- * @author    Davi Backendorf <davijacksonb@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Backendorf\Installment\Block;
 
@@ -25,19 +16,14 @@ use \Magento\Framework\Stdlib\StringUtils;
 use \Magento\Framework\Url\EncoderInterface as urlEncoder;
 use \Magento\Framework\Json\EncoderInterface as jsonEncoder;
 
-/**
- * Class AllInstallments
- * @package Backendorf\Installment\Block
- */
 class AllInstallments extends View
 {
     /**
      * @var helperData
      */
-    public $_helperData;
+    public helperData $_helperData;
 
     /**
-     * AllInstallments constructor.
      * @param helperData $HelperData
      * @param Context $context
      * @param urlEncoder $urlEncoder
@@ -52,19 +38,20 @@ class AllInstallments extends View
      * @param array $data
      */
     public function __construct(
-        helperData $HelperData,
-        Context $context,
-        urlEncoder $urlEncoder,
-        jsonEncoder $jsonEncoder,
-        StringUtils $stringUtils,
-        Product $productHelper,
-        ConfigInterface $productTypeConfig,
-        FormatInterface $localeFormat,
-        Session $customerSession,
+        helperData                 $HelperData,
+        Context                    $context,
+        urlEncoder                 $urlEncoder,
+        jsonEncoder                $jsonEncoder,
+        StringUtils                $stringUtils,
+        Product                    $productHelper,
+        ConfigInterface            $productTypeConfig,
+        FormatInterface            $localeFormat,
+        Session                    $customerSession,
         ProductRepositoryInterface $productRepository,
-        PriceCurrencyInterface $priceCurrency,
-        array $data = []
-    ) {
+        PriceCurrencyInterface     $priceCurrency,
+        array                      $data = []
+    )
+    {
         $this->_helperData = $HelperData;
         parent::__construct(
             $context,
