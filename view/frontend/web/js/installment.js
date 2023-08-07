@@ -39,6 +39,10 @@ define([
                                 widget.updateAllInstallments(data.element, {amount: data.price.final});
                             }
                         }
+                    }).on('products-loaded', function () {
+                        $('.price-box.price-final_price').each(function (i, element) {
+                            widget.renderPrices(element);
+                        });
                     });
 
                     $('.price-box.price-final_price').each(function (i, element) {
