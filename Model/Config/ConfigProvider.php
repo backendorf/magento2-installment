@@ -3,21 +3,12 @@ declare(strict_types=1);
 
 namespace Backendorf\Installment\Model\Config;
 
-use \Magento\Config\Model\ResourceModel\Config;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Framework\Exception\NoSuchEntityException;
 use \Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Framework\Unserialize\Unserialize;
-use \Magento\Store\Model\ScopeInterface;
-use \Magento\Store\Model\StoreManagerInterface;
 
 class ConfigProvider
 {
-    /**
-     * @var StoreManagerInterface
-     */
-    protected StoreManagerInterface $_storeManager;
-
     /**
      * @var Path
      */
@@ -27,11 +18,6 @@ class ConfigProvider
      * @var ScopeConfigInterface
      */
     protected ScopeConfigInterface $_scopeConfig;
-
-    /**
-     * @var Config
-     */
-    protected Config $_resourceConfig;
 
     /**
      * @var Unserialize
@@ -44,26 +30,20 @@ class ConfigProvider
     private Json $_serializerJson;
 
     /**
-     * @param StoreManagerInterface $StoreManager
      * @param ScopeConfigInterface $ScopeConfig
      * @param Path $ConfigPath
-     * @param Config $ResourceConfig
      * @param Unserialize $Unserialize
      * @param Json $SerializerJson
      */
     function __construct(
-        StoreManagerInterface $StoreManager,
-        ScopeConfigInterface  $ScopeConfig,
-        Path                  $ConfigPath,
-        Config                $ResourceConfig,
-        Unserialize           $Unserialize,
-        Json                  $SerializerJson
+        ScopeConfigInterface $ScopeConfig,
+        Path                 $ConfigPath,
+        Unserialize          $Unserialize,
+        Json                 $SerializerJson
     )
     {
-        $this->_storeManager = $StoreManager;
         $this->_configPath = $ConfigPath;
         $this->_scopeConfig = $ScopeConfig;
-        $this->_resourceConfig = $ResourceConfig;
         $this->_unserialize = $Unserialize;
         $this->_serializerJson = $SerializerJson;
     }
@@ -73,7 +53,7 @@ class ConfigProvider
      */
     public function isModuleEnable(): bool
     {
-        return (bool)$this->getConfigValue($this->_configPath::MODULE_ENABLE);
+        return $this->_scopeConfig->isSetFlag($this->_configPath::MODULE_ENABLE);
     }
 
     /**
@@ -81,7 +61,7 @@ class ConfigProvider
      */
     public function getMaximumQuantityInstallments(): int
     {
-        return (int)$this->getConfigValue($this->_configPath::MAXIMUM_QUANTITY_INSTALLMENTS);
+        return (int)$this->_scopeConfig->getValue($this->_configPath::MAXIMUM_QUANTITY_INSTALLMENTS);
     }
 
     /**
@@ -89,7 +69,7 @@ class ConfigProvider
      */
     public function getMinimumInstallmentValue(): float
     {
-        return (float)$this->getConfigValue($this->_configPath::MINIMUM_INSTALLMENT_VALUE);
+        return (float)$this->_scopeConfig->getValue($this->_configPath::MINIMUM_INSTALLMENT_VALUE);
     }
 
     /**
@@ -97,7 +77,7 @@ class ConfigProvider
      */
     public function showAllInstallments(): bool
     {
-        return (bool)$this->getConfigValue($this->_configPath::SHOW_ALL_INSTALLMENTS_ON_PRODUCT_PAGE);
+        return $this->_scopeConfig->isSetFlag($this->_configPath::SHOW_ALL_INSTALLMENTS_ON_PRODUCT_PAGE);
     }
 
     /**
@@ -105,7 +85,7 @@ class ConfigProvider
      */
     public function getInterestType(): string
     {
-        return (string)$this->getConfigValue($this->_configPath::INTEREST_TYPE);
+        return (string)$this->_scopeConfig->getValue($this->_configPath::INTEREST_TYPE);
     }
 
     /**
@@ -114,7 +94,7 @@ class ConfigProvider
      */
     public function getInterestRate(int $x): ?float
     {
-        return (float)$this->getConfigValue($this->_configPath::INSTALLMENT_INTEREST_X . 'interest_' . $x);
+        return (float)$this->_scopeConfig->getValue($this->_configPath::INSTALLMENT_INTEREST_X . 'interest_' . $x);
     }
 
     /**
@@ -122,7 +102,7 @@ class ConfigProvider
      */
     public function getDiscounts(): array
     {
-        $value = $this->getConfigValue($this->_configPath::DISCOUNTS);
+        $value = $this->_scopeConfig->getValue($this->_configPath::DISCOUNTS);
 
         if (empty($value)) {
             return [];
@@ -151,7 +131,7 @@ class ConfigProvider
      */
     public function showFirstInstallment(): bool
     {
-        return (bool)$this->getConfigValue($this->_configPath::SHOW_FIRST_INSTALLMENT);
+        return $this->_scopeConfig->isSetFlag($this->_configPath::SHOW_FIRST_INSTALLMENT);
     }
 
     /**
@@ -159,7 +139,7 @@ class ConfigProvider
      */
     public function bestInstallmentInCart(): bool
     {
-        return (bool)$this->getConfigValue($this->_configPath::BEST_INSTALLMENT_IN_CART);
+        return $this->_scopeConfig->isSetFlag($this->_configPath::BEST_INSTALLMENT_IN_CART);
     }
 
     /**
@@ -168,36 +148,6 @@ class ConfigProvider
      */
     public function getPriceTemplate(string $page): string
     {
-        return (string)$this->getConfigValue(str_replace('{{page}}', $page, $this->_configPath::PRICE_TEMPLATE));
-    }
-
-    /**
-     * @param string $configPath
-     * @return mixed
-     */
-    private function getConfigValue(string $configPath): mixed
-    {
-        $storeId = $this->getStoreId();
-        if (!$storeId) {
-            return null;
-        }
-
-        return $this->_scopeConfig->getValue(
-            $configPath,
-            ScopeInterface::SCOPE_STORE,
-            $storeId
-        );
-    }
-
-    /**
-     * @return int|null
-     */
-    private function getStoreId()
-    {
-        try {
-            return $this->_storeManager->getStore()->getStoreId();
-        } catch (NoSuchEntityException $e) {
-            return null;
-        }
+        return (string)$this->_scopeConfig->getValue(str_replace('{{page}}', $page, $this->_configPath::PRICE_TEMPLATE));
     }
 }
