@@ -86,7 +86,8 @@ class Data extends AbstractHelper
 
         $productPrice = $this->getProductPrice($product);
         $minInstallment = $this->_configProvider->getMinimumInstallmentValue();
-        if (($productPrice < $minInstallment) || (($productPrice / 2) < $minInstallment)) {
+
+        if (($productPrice < $minInstallment)) {
             return false;
         }
 
