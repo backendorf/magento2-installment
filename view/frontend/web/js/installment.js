@@ -273,6 +273,7 @@ define([
             let price = (prices) ? prices.amount : this.getElmPrice(priceElement);
             let installments = this.getInstallments(price);
 
+            let installmentDiv = ($(priceElement).closest('.backendorf-installment').length > 0) ? $(priceElement).closest('.backendorf-installment') : null;
             if (installments) {
                 let data = {
                     'bestInstallment': this.getBestInstallment(installments),
@@ -285,8 +286,6 @@ define([
                     .replace('{{value}}', data.bestInstallment.installment_value)
                     .replace('{{interest}}', (this.renderInterest(data.bestInstallment)) + '</div>')
                     .replace('{{discounts}}', '<div class="discounts">' + data.discounts + '</div>');
-
-                let installmentDiv = ($(priceElement).closest('.backendorf-installment').length > 0) ? $(priceElement).closest('.backendorf-installment') : null;
                 if (installmentDiv) {
                     $(priceElement).insertBefore($(installmentDiv));
                     $(installmentDiv).html(template);
@@ -295,6 +294,11 @@ define([
                     installmentDiv.insertBefore(priceElement);
                 }
                 $(installmentDiv).find('.default').replaceWith(priceElement);
+                $(installmentDiv).find(".best-installment, .discounts").show();
+                $(".wrap-collabsible.backendorf-installment").show();
+            } else {
+                $(installmentDiv).find(".best-installment, .discounts").hide();
+                $(".wrap-collabsible.backendorf-installment").hide();
             }
         },
         /**
