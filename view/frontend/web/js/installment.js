@@ -271,6 +271,11 @@ define([
         renderPrices: function (priceElement, prices = null) {
             let template = this.getTemplate();
             let price = (prices) ? prices.amount : this.getElmPrice(priceElement);
+
+            if (price === 0) {
+                return;
+            }
+
             let installments = this.getInstallments(price);
 
             let installmentDiv = ($(priceElement).closest('.backendorf-installment').length > 0) ? $(priceElement).closest('.backendorf-installment') : null;
