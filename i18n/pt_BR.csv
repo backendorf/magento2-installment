@@ -1,34 +1,54 @@
-"Minimum installment value","Valor mínimo da parcela"
-"Maximum quantity installments","Quantidade máxima de parcelas"
-"General","Geral"
-"Enabled","Habilitado"
-"Show all installments on product page","Mostrar todas as opções de parcelamento na página de produto"
-"Show the first installment", "Mostrar a primeira parcela"
-"Discounts", "Descontos"
-"Discount","Desconto"
-"Price Templates", "Templates"
-"On Category Page", "Na página de categoria"
-"On Search Results", "Nos resultados de busca"
-"On Product View", "Na página do produto"
-"no interest", " sem juros"
-"Yes", "Sim"
-"No", "Não"
-"Simple", "Simples"
-"Compound", "Composto"
-"Name", "Nome"
-"Percentage", "Percentual"
-"Action", "Ação"
-"Add","Adicionar"
-"Discount Template", "Desconto"
-"In Cart Template","No carrinho"
-"Best installment in cart", "Mostrar a parcela mais baixa no carrinho"
+Name,Nome
+Percentage,Percentual
+Add,Adicionar
+"Missing product parameter on showAllInstallments()","Missing product parameter on showAllInstallments()"
+Simple,Simples
+Compound,Composto
+1,1
+2,2
+3,3
+4,4
+5,5
+6,6
+7,7
+8,8
+9,9
+10,10
+11,11
+12,12
 "See more installment options","Ver mais opções de parcelamento"
+Calculating...,Calculando...
 "The values presented are for consultation only, the real value of the parcel will be displayed at the end of the order.","Os valores apresentados são apenas para consulta, o valor real da parcela será exibido no fechamento do pedido."
-"Interest", "Juros"
-"Interest type", "Tipo de juros"
-"Installment", "Parcelamento"
-"All Installment Template", "Todas as opções de parcelamento"
-"Calculating...", "Calculando..."
-"Text with interest", "Texto com juros"
-"Text free interest", "Texto sem juros"
-"Send error's to module developer?","Notificar desenvolvedor do módulo sobre erros?"
+Backendorf,Backendorf
+Installment,Preços adicionais
+General,Geral
+Enabled,Habilitado
+"Maximum quantity installments","Quantidade máxima de parcelas"
+"Minimum installment value","Valor mínimo da parcela"
+"Show all installments on product page","Mostrar todas as opções de parcelamento na página de produto"
+"Show the first installment","Mostrar a primeira parcela"
+"Best installment in cart","Mostrar a parcela mais baixa no carrinho"
+Interest,Juros
+"Interest type","Tipo de juros"
+2x,2x
+3x,3x
+4x,4x
+5x,5x
+6x,6x
+7x,7x
+8x,8x
+9x,9x
+10x,10x
+11x,11x
+12x,12x
+Discounts,Descontos
+Discount,Desconto
+"Price Templates","Templates de preço"
+"On Category Page","Na página de category"
+"On Search Results","Nos resultados de busca"
+"On Product View","Na página do produto"
+"Discount Template","Template de preço para descontos"
+"In Cart Template","Template de preço no carrinho"
+"All Installment Template","Template de preço para todas as opções de parcelamento"
+"Text with interest","Texto com juros"
+"Text free interest","Texto sem juros"
