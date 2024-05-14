@@ -150,4 +150,16 @@ class ConfigProvider
     {
         return (string)$this->_scopeConfig->getValue(str_replace('{{page}}', $page, $this->_configPath::PRICE_TEMPLATE));
     }
+
+    /**
+     * @return array
+     */
+    public function getStyles(): array
+    {
+        return [
+            'primary-color' => $this->_scopeConfig->getValue($this->_configPath::PRIMARY_COLOR),
+            'highlight-text-color' => $this->_scopeConfig->getValue($this->_configPath::HIGHLIGHT_TEXT_COLOR),
+            'highlight-text-font-weight' => $this->_scopeConfig->getValue($this->_configPath::HIGLIGHT_TEXT_FONT_WEIGHT)
+        ];
+    }
 }

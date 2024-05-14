@@ -2,11 +2,22 @@
 // @codingStandardsIgnoreFile
 
 /** @var Backendorf\Installment\Block\Script $block */
+
+use Backendorf\Installment\Helper\Data;
+
+$styles = $this->helper(Data::class)->getStyles();
 ?>
-<script type="text/x-magento-init">
-	{
-		"*": {
-		    "installment":  <?= $block->getConfig(); ?>
-	    }
+<style>
+    .backendorf-installment {
+        --bi-primary-color: <?=$styles['primary-color'];?>;
+        --bi-highlight-text-color: <?=$styles['highlight-text-color'];?>;
+        --bi-highlight-text-font-weight: <?=$styles['highlight-text-font-weight'];?>;
     }
+</style>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "installment": <?= $block->getConfig(); ?>
+    }
+}
 </script>

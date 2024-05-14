@@ -102,4 +102,12 @@ class Data extends AbstractHelper
     {
         return (float)($product->getMinimalPrice()) ? $product->getMinimalPrice() : $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
     }
+
+    /**
+     * @return array
+     */
+    public function getStyles(): array
+    {
+        return $this->_configProvider->getStyles();
+    }
 }

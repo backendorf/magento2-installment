@@ -7,7 +7,7 @@
 }
 
 .lbl-toggle {
-    background-color: @theme__color__primary;
+    background-color: var(--bi-primary-color);
     border-radius: 4px;
     color: @color-white;
     cursor: pointer;
@@ -75,7 +75,8 @@
         white-space: nowrap;
 
         strong {
-            color: @theme__color__primary;
+            color: var(--bi-highlight-text-color);
+            font-weight: var(--bi-highlight-text-font-weight);
         }
     }
 
@@ -98,7 +99,8 @@
             margin: 5px 0;
 
             strong {
-                color: @theme__color__primary;
+                color: var(--bi-highlight-text-color);
+                font-weight: var(--bi-highlight-text-font-weight);
             }
 
             span {
@@ -110,7 +112,8 @@
     .discounts {
         .item {
             strong {
-                color: @theme__color__primary;
+                color: var(--bi-highlight-text-color);
+                font-weight: var(--bi-highlight-text-font-weight);
             }
         }
 
