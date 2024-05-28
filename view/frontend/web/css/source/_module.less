@@ -1,78 +1,9 @@
-.wrap-collabsible {
-    margin-bottom: 16px;
-
-    input[type='checkbox'] {
-        display: none;
-    }
-}
-
-.lbl-toggle {
-    background-color: var(--bi-primary-color);
-    border-radius: 4px;
-    color: @color-white;
-    cursor: pointer;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 1rem;
-    text-align: center;
-    text-transform: uppercase;
-    transition: all 0.25s ease-out;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-
-    &::after {
-        border-bottom: 5px solid transparent;
-        border-left: 5px solid white;
-        border-top: 5px solid transparent;
-        content: '';
-        display: inline-block;
-        margin-right: .7rem;
-        margin-top: 5px;
-        transform: translateY(-2px);
-        transition: transform 0.2s ease-out;
-        vertical-align: middle;
-        float: right;
-    }
-}
-
-.toggle {
-    &:checked {
-        & + .lbl-toggle {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-
-            &::after {
-                transform: rotate(90deg) translateX(-3px);
-            }
-
-            & + .collapsible-content {
-                max-height: min-content;
-            }
-        }
-    }
-}
-
-.collapsible-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease-in-out;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-
-    .content-inner {
-        border-bottom-left-radius: 7px;
-        border-bottom-right-radius: 7px;
-        padding: .5rem 1rem;
-    }
-}
-
-.backendorf-installment {
+.installments {
     .best-installment {
-        font-weight: 500;
-        margin: 5px 0 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-        white-space: nowrap;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 400;
+        margin: 10px 0;
 
         strong {
             color: var(--bi-highlight-text-color);
@@ -80,46 +11,66 @@
         }
     }
 
-    .footer-message {
-        color: @color-gray-light3;
-        font-size: 9px;
-        line-height: 1.2;
-    }
+    .discounts ul {
+        list-style: none;
+        padding: 0;
 
-    .installments.title {
-        font-size: 12px;
-    }
-
-    .installments-options {
-        font-size: 1.1em;
-        padding: 5px 10px;
-
-        .installment-option {
-            list-style: none;
-            margin: 5px 0;
-
-            strong {
-                color: var(--bi-highlight-text-color);
-                font-weight: var(--bi-highlight-text-font-weight);
-            }
-
-            span {
-                font-size: 13px;
-            }
-        }
-    }
-
-    .discounts {
-        .item {
+        li.item {
             strong {
                 color: var(--bi-highlight-text-color);
                 font-weight: var(--bi-highlight-text-font-weight);
             }
         }
+    }
+}
 
-        ul {
+#installments-accordion {
+    [data-role="collapsible"].active [data-role="trigger"] {
+        border-radius: 4px 4px 0 0;
+    }
+
+    [data-role="trigger"] {
+        display: block;
+        background-color: var(--bi-primary-color);
+        border-radius: 4px;
+        color: @color-white;
+        cursor: pointer;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 16px 32px;
+
+        h5 {
+            margin: 0;
+        }
+    }
+
+    [data-role="content"] {
+        border: 1px solid @color-gray-light5;
+        padding: 16px;
+        border-radius: 0 0 4px 4px;
+
+        ul.options {
             list-style: none;
             padding: 0;
+            font-size: 14px;
+            line-height: 16px;
+
+            li {
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+
+                strong {
+                    color: var(--bi-highlight-text-color);
+                    font-weight: var(--bi-highlight-text-font-weight);
+                }
+            }
+        }
+
+        .footer-message {
+            color: @color-gray-light3;
+            font-size: 10px;
+            line-height: 12px;
         }
     }
 }
