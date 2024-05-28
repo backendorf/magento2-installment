@@ -68,7 +68,7 @@ define([
             }
         },
         initPricesInCart: function (total = null) {
-            $('#cart-totals .backendorf-installment').remove();
+            $('#cart-totals .installments').remove();
             total = (total) ? total : this.getTotal();
             if (total) {
                 let installments = this.getInstallments(total);
@@ -79,7 +79,7 @@ define([
                     let html = template.replace('{{qty}}', bestInstallment.installments_qty)
                         .replace('{{value}}', bestInstallment.installment_value)
                         .replace('{{interest}}', (this.renderInterest(bestInstallment)))
-                    $('#cart-totals').append('<div class="backendorf-installment">' + html + '</div>');
+                    $('#cart-totals').append('<div class="installments">' + html + '</div>');
                 }
             }
 
@@ -238,14 +238,14 @@ define([
             if (installments) {
                 let template = this.options.templates.all_installment_template;
 
-                let html = '<ul class="installments-options">';
+                let html = '<ul class="options">';
                 for (let i in installments) {
-                    html += '<li class="installment-option">' + template.replace('{{qty}}', installments[i]['installments_qty'])
+                    html += '<li>' + template.replace('{{qty}}', installments[i]['installments_qty'])
                         .replace('{{value}}', installments[i]['installment_value'])
                         .replace('{{interest}}', (this.renderInterest(installments[i]))) + '</li>';
                 }
                 html += '</ul>';
-                $('.backendorf-installment .all-installments-content').html(html);
+                $('#installments-accordion .all-installments-content').html(html);
             }
         },
         /**
@@ -278,7 +278,7 @@ define([
 
             let installments = this.getInstallments(price);
 
-            let installmentDiv = ($(priceElement).closest('.backendorf-installment').length > 0) ? $(priceElement).closest('.backendorf-installment') : null;
+            let installmentDiv = ($(priceElement).closest('.installments').length > 0) ? $(priceElement).closest('.installments') : null;
             if (installments) {
                 let data = {
                     'bestInstallment': this.getBestInstallment(installments),
@@ -295,15 +295,15 @@ define([
                     $(priceElement).insertBefore($(installmentDiv));
                     $(installmentDiv).html(template);
                 } else {
-                    installmentDiv = $('<div class="backendorf-installment">' + template + '</div>');
+                    installmentDiv = $('<div class="installments">' + template + '</div>');
                     installmentDiv.insertBefore(priceElement);
                 }
                 $(installmentDiv).find('.default').replaceWith(priceElement);
                 $(installmentDiv).find(".best-installment, .discounts").show();
-                $(".wrap-collabsible.backendorf-installment").show();
+                $(".wrap-collabsible.installments").show();
             } else {
                 $(installmentDiv).find(".best-installment, .discounts").hide();
-                $(".wrap-collabsible.backendorf-installment").hide();
+                $(".wrap-collabsible.installments").hide();
             }
         },
         /**

@@ -43,6 +43,11 @@
                     <![CDATA[<span>(taxa de {{rate}} = {{total_interest}}, totalizando {{amount}})</span>]]></text_with_interest>
                 <text_free_interest><![CDATA[<span>sem juros</span>]]></text_free_interest>
             </price_templates>
+            <styles>
+                <primary_color>#1979c3</primary_color>
+                <highlight_text_color>#1979c3</highlight_text_color>
+                <highlight_text_font_weight>700</highlight_text_font_weight>
+            </styles>
         </backendorf_installment>
     </default>
 </config>
