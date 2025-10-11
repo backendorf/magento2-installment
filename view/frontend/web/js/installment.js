@@ -300,10 +300,10 @@ define([
                 }
                 $(installmentDiv).find('.default').replaceWith(priceElement);
                 $(installmentDiv).find(".best-installment, .discounts").show();
-                $(".wrap-collabsible.installments").show();
+                $(".wrap-collapsible.installments").show();
             } else {
                 $(installmentDiv).find(".best-installment, .discounts").hide();
-                $(".wrap-collabsible.installments").hide();
+                $(".wrap-collapsible.installments").hide();
             }
         },
         /**
