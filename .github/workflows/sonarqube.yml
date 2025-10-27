@@ -41,6 +41,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+     - name: Setup JDK 17
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
       - name: Analyze with SonarQube
 
         # You can pin the exact commit or the version.
