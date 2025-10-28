@@ -41,6 +41,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up Java 17
+        uses: actions/setup-java@v4 # Use a versão mais recente desta Action
+        with:
+          java-version: '17' # Define que o Java 17 será usado
+          distribution: 'temurin' # Uma distribuição popular e gratuita do JDK
+          
       - name: Analyze with SonarQube
 
         # You can pin the exact commit or the version.
