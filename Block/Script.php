@@ -34,6 +34,6 @@ class Script extends Template
      */
     public function getConfig(): string
     {
-        return json_encode($this->_helperData->getConfig());
+        return json_encode($this->_helperData->getConfig(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
     }
 }

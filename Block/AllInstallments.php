@@ -21,10 +21,10 @@ class AllInstallments extends View
     /**
      * @var helperData
      */
-    public helperData $_helperData;
+    private helperData $helperData;
 
     /**
-     * @param helperData $HelperData
+     * @param helperData $helperData
      * @param Context $context
      * @param urlEncoder $urlEncoder
      * @param jsonEncoder $jsonEncoder
@@ -38,7 +38,7 @@ class AllInstallments extends View
      * @param array $data
      */
     public function __construct(
-        helperData                 $HelperData,
+        helperData                 $helperData,
         Context                    $context,
         urlEncoder                 $urlEncoder,
         jsonEncoder                $jsonEncoder,
@@ -50,9 +50,8 @@ class AllInstallments extends View
         ProductRepositoryInterface $productRepository,
         PriceCurrencyInterface     $priceCurrency,
         array                      $data = []
-    )
-    {
-        $this->_helperData = $HelperData;
+    ) {
+        $this->helperData = $helperData;
         parent::__construct(
             $context,
             $urlEncoder,
@@ -73,6 +72,6 @@ class AllInstallments extends View
      */
     public function renderAllInstallments(): bool
     {
-        return $this->_helperData->showAllInstallments($this->getProduct());
+        return $this->helperData->showAllInstallments($this->getProduct());
     }
 }

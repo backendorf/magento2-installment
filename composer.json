@@ -3,7 +3,10 @@
     "description": "Add installment feature to Magento 2",
     "type": "magento2-module",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "magento/framework": "*",
+        "magento/module-catalog": "*"
+    },
     "autoload": {
         "psr-4": {
             "Backendorf\\Installment\\": ""

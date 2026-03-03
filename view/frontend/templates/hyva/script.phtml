@@ -1,0 +1,308 @@
+<?php
+declare(strict_types=1);
+
+/** @var Backendorf\Installment\Block\Script $block */
+
+use Backendorf\Installment\Helper\Data;
+use Hyva\Theme\ViewModel\HyvaCsp;
+use Hyva\Theme\Model\ViewModelRegistry;
+
+/** @var HyvaCsp $hyvaCsp */
+/** @var ViewModelRegistry $viewModels */
+
+$hyvaCsp = $viewModels->require(HyvaCsp::class);
+
+$styles = $this->helper(Data::class)->getStyles() ?? [];
+?>
+
+<style>
+    .installments {
+        --bi-primary-color: <?= $block->escapeHtml($styles['primary-color'] ?? '#000000'); ?>;
+        --bi-highlight-text-color: <?= $block->escapeHtml($styles['highlight-text-color'] ?? '#000000'); ?>;
+        --bi-highlight-text-font-weight: <?= $block->escapeHtml($styles['highlight-text-font-weight'] ?? '600'); ?>;
+    }
+    .installments .best-installment strong,
+    .installments .discounts strong {
+        color: var(--bi-highlight-text-color);
+        font-weight: var(--bi-highlight-text-font-weight);
+    }
+</style>
+
+<script>
+    function initInstallment(productId = null, initialPrice = 0, templateType) {
+        return {
+            config: <?= /* @noEscape */ $block->getConfig() ?>,
+            templateType: templateType,
+            productId: productId,
+            installments: {},
+            discounts: [],
+            bestInstallment: null,
+            currentPrice: initialPrice,
+            _timeout: null,
+
+            ...hyva.createBooleanObject('open', false),
+
+            init() {
+                if (!this.config?.enabled) return;
+
+                if (this.currentPrice > 0) {
+                    this.updatePrices(this.currentPrice);
+                } else {
+                    this.updatePrices();
+                }
+
+                if (this.productId) {
+                    window.addEventListener('update-prices-' + this.productId, (event) => {
+                        if (event.detail?.finalPrice) {
+                            this.updatePrices(event.detail.finalPrice);
+                        }
+                    });
+                }
+            },
+            renderBestInstallment() {
+                if (!this.bestInstallment) return '';
+
+                const template = this.config.templates[this.templateType]
+                    ?? this.config.templates.catalog_category_view;
+
+                return this.renderTemplate(template, {
+                    default: '',
+                    qty: this.bestInstallment.qty,
+                    value: this.bestInstallment.value,
+                    interest: this.renderInterest(this.bestInstallment),
+                    discounts: ''
+                });
+            },
+            updatePrices(price = null) {
+                if (this._timeout) clearTimeout(this._timeout);
+
+                this._timeout = setTimeout(() => {
+                    if (price === null) {
+                        if (!this.productId) return;
+                        let priceElement = document.querySelector(
+                            '[data-price-box="product-id-' + this.productId + '"] [data-price-type="finalPrice"]'
+                        );
+                        if (!priceElement) return;
+                        price = parseFloat(priceElement.getAttribute('data-price-amount'));
+                    }
+
+                    if (!price || isNaN(price)) return;
+
+                    // Skip if same price and state already populated
+                    if (price === this.currentPrice && this.discounts.length > 0) return;
+
+                    this.currentPrice = price;
+                    this.discounts = []; // Clear current discounts before recalculating
+
+                    // Calculate next state
+                    const nextDiscounts = this.calculateDiscounts(price);
+                    const nextInstallments = this.calculateInstallments(price);
+
+                    // Set state atomically
+                    this.discounts = nextDiscounts;
+                    this.installments = nextInstallments || {};
+                    this.bestInstallment = this.getBestInstallment(this.installments);
+                }, 100);
+            },
+
+            calculateInstallments(productPrice) {
+
+                if (!this.config?.interest) return null;
+
+                const typeInterest = this.config.interest_type;
+                const infoInterest = this.config.interest;
+                const minInstallment = parseFloat(this.config.minimum_installment_value);
+                const maxInstallment = parseInt(this.config.maximum_quantity_installments);
+
+                let jsonInstallments = {};
+
+                if (this.config.show_first_installment) {
+                    jsonInstallments[1] = {
+                        qty: 1,
+                        value: hyva.formatPrice(productPrice),
+                        totalInterest: hyva.formatPrice(0),
+                        amount: hyva.formatPrice(productPrice),
+                        hasInterest: false,
+                        rate: "0%",
+                        rawAmount: productPrice,
+                        rawTotalInterest: 0
+                    };
+                } else {
+                    if ((productPrice < minInstallment) || ((productPrice / 2) < minInstallment)) {
+                        return null;
+                    }
+                }
+
+                let maxDiv = Math.floor(productPrice / minInstallment);
+                maxDiv = Math.min(maxDiv, maxInstallment);
+
+                for (let i = 1; i <= maxInstallment; i++) {
+
+                    if (i > maxDiv && i > 1) continue;
+
+                    const rateStr = infoInterest[i];
+                    if (rateStr === undefined) continue;
+
+                    const rate = parseFloat(rateStr) / 100;
+
+                    let amount = 0;
+                    let installmentValue = 0;
+
+                    if (rate > 0) {
+
+                        if (typeInterest === "compound") {
+                            amount = productPrice * Math.pow((1 + rate), i);
+                        } else {
+                            amount = productPrice + (productPrice * rate * i);
+                        }
+
+                        installmentValue = amount / i;
+
+                        const totalInterest = amount - productPrice;
+
+                        if (installmentValue >= minInstallment || i === 1) {
+                            jsonInstallments[i] = {
+                                qty: i,
+                                value: hyva.formatPrice(installmentValue),
+                                totalInterest: hyva.formatPrice(totalInterest),
+                                amount: hyva.formatPrice(amount),
+                                hasInterest: true,
+                                rate: rateStr + "%",
+                                rawAmount: amount,
+                                rawTotalInterest: totalInterest
+                            };
+                        }
+
+                    } else {
+
+                        installmentValue = productPrice / i;
+
+                        jsonInstallments[i] = {
+                            qty: i,
+                            value: hyva.formatPrice(installmentValue),
+                            totalInterest: hyva.formatPrice(0),
+                            amount: hyva.formatPrice(productPrice),
+                            hasInterest: false,
+                            rate: rateStr + "%",
+                            rawAmount: productPrice,
+                            rawTotalInterest: 0
+                        };
+                    }
+                }
+
+                return Object.values(jsonInstallments);
+            },
+
+            getBestInstallment(installments) {
+
+                if (!installments?.length) return null;
+
+                const max = parseInt(this.config.maximum_quantity_installments);
+
+                for (let i = max; i >= 1; i--) {
+                    const inst = installments.find(inst => inst.qty === i);
+                    if (!inst) continue;
+
+                    if (!inst.hasInterest) return inst;
+                }
+
+                return installments[installments.length - 1] ?? null;
+            },
+
+            calculateDiscounts(price) {
+                const discounts = this.config.discounts || {};
+                const seen = new Set();
+                const result = [];
+
+                Object.values(discounts).forEach(discount => {
+                    const name = (discount.name || 'Desconto').trim();
+                    const key = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    if (!name || seen.has(key)) return;
+
+                    seen.add(key);
+                    const percentage = parseFloat(discount.percentage || 0);
+                    const discountedPrice = price - ((price * percentage) / 100);
+
+                    result.push({
+                        ...discount,
+                        name: name,
+                        formattedValue: hyva.formatPrice(discountedPrice)
+                    });
+                });
+
+                return result;
+            },
+
+            renderTemplate(template, data) {
+                let html = template;
+                for (const key in data) {
+                    html = html.replace(new RegExp('{{' + key + '}}', 'g'), data[key]);
+                }
+                return html;
+            },
+
+            renderInterest(installment) {
+                if (!installment) return '';
+
+                const template = installment.hasInterest
+                    ? this.config.templates.text_with_interest
+                    : this.config.templates.text_free_interest;
+
+                return this.renderTemplate(template, {
+                    amount: installment.amount,
+                    total_interest: installment.totalInterest,
+                    rate: installment.rate
+                });
+            },
+
+            renderCatalogCategoryViewBestInstallment() {
+                if (!this.bestInstallment) return '';
+
+                return this.renderTemplate(this.config.templates.catalog_category_view, {
+                    default: '',
+                    qty: this.bestInstallment.qty,
+                    value: this.bestInstallment.value,
+                    interest: this.renderInterest(this.bestInstallment),
+                    discounts: ''
+                });
+            },
+
+            renderCatalogProductViewBestInstallment() {
+                if (!this.bestInstallment) return '';
+
+                return this.renderTemplate(this.config.templates.catalog_product_view, {
+                    default: '',
+                    qty: this.bestInstallment.qty,
+                    value: this.bestInstallment.value,
+                    interest: this.renderInterest(this.bestInstallment),
+                    discounts: ''
+                });
+            },
+
+            renderDiscountItem(discount) {
+                return this.renderTemplate(this.config.templates.discount_template, {
+                    valueWithDiscount: discount.formattedValue,
+                    percentage: discount.percentage + '%',
+                    name: discount.name
+                });
+            },
+
+            renderInstallmentOption(inst) {
+                return this.renderTemplate(this.config.templates.all_installment_template, {
+                    qty: inst.qty,
+                    value: inst.value,
+                    interest: this.renderInterest(inst)
+                });
+            }
+        }
+    }
+
+    window.addEventListener(
+        'alpine:init',
+        () => Alpine.data('initInstallment', initInstallment),
+        {once: true}
+    );
+</script>
+
+<?php $hyvaCsp->registerInlineScript() ?>

@@ -1,0 +1,127 @@
+<?php
+/** @var Backendorf\Installment\Block\AllInstallments $block */
+?>
+
+<div
+    x-data="initInstallment(<?= (int)$block->getProduct()->getId() ?>, <?= (float)$block->getProduct()->getFinalPrice() ?>, 'catalog_product_view')"
+    x-init="init()"
+    x-cloak
+    class="installments mt-2 space-y-4"
+    x-show="config.enabled && (bestInstallment || (discounts && discounts.length > 0))"
+>
+
+    <!-- Best Installment & Discounts -->
+    <div class="space-y-2">
+
+        <template x-if="bestInstallment">
+            <div class="best-installment text-base font-semibold text-neutral-900 leading-tight"
+                 x-html="renderCatalogProductViewBestInstallment()">
+            </div>
+        </template>
+
+        <template x-if="discounts && discounts.length">
+            <div class="discounts space-y-1 text-sm text-neutral-600">
+                <template x-for="discount in discounts" :key="discount.name">
+                    <div class="flex items-center justify-between" x-html="renderDiscountItem(discount)">
+                    </div>
+                </template>
+            </div>
+        </template>
+
+    </div>
+
+
+    <!-- More Installment Options (Modal) -->
+    <div class="mt-4">
+        <button
+            @click="toggleOpen"
+            type="button"
+            class="underline text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors duration-200"
+        >
+            <?= $block->escapeHtml(__('More installment options')); ?>
+        </button>
+
+        <template x-if="open()">
+            <div
+                class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+            >
+                <!-- Backdrop -->
+                <div
+                    class="fixed inset-0 bg-neutral-900/60 backdrop-blur-[2px]"
+                    @click="toggleOpen"
+                ></div>
+
+                <!-- Modal Container -->
+                <div
+                    class="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                    <!-- Header -->
+                    <div class="flex items-center justify-between border-b border-neutral-100/80 px-8 py-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-neutral-900">
+                                <?= $block->escapeHtml(__('Installment Options')); ?>
+                            </h3>
+                            <p class="text-xs text-neutral-400 mt-0.5"><?= $block->escapeHtml(__('Review available plans')); ?></p>
+                        </div>
+                        <button
+                            @click="toggleOpen"
+                            class="group rounded-full p-2.5 text-neutral-400 hover:bg-neutral-50 hover:text-neutral-900 transition-all duration-200"
+                        >
+                            <svg class="h-5 w-5 transition-transform group-hover:rotate-90" fill="none"
+                                 stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="max-h-[50vh] overflow-y-auto custom-scrollbar">
+                        <ul class="">
+                            <template x-for="(inst, index) in installments" :key="inst.qty">
+                                <li
+                                    class="px-8 py-4 flex items-center justify-between group transition-colors duration-150 hover:bg-neutral-100/80"
+                                    :class="index % 2 === 0 ? 'bg-white' : 'bg-neutral-50'"
+                                >
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-semibold text-neutral-800"
+                                              x-text="inst.qty + 'x'"></span>
+                                        <span class="text-[11px] text-neutral-400 group-hover:text-neutral-500"
+                                              x-text="inst.hasInterest ? '<?= $block->escapeHtml(__('With interest')); ?>' : '<?= $block->escapeHtml(__('Interest-free')); ?>'"></span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-base font-bold text-neutral-900" x-text="inst.value"></span>
+                                        <template x-if="inst.qty > 1">
+                                            <div class="text-[11px] text-neutral-400 group-hover:text-neutral-500"
+                                                 x-html="'Total: ' + inst.amount"></div>
+                                        </template>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-neutral-50/50 px-8 py-5 border-t border-neutral-100/80">
+                        <p class="text-[10px] leading-relaxed text-neutral-400 text-center uppercase tracking-wider font-medium">
+                            <?= $block->escapeHtml(__('Values for consultation only. Final values shown at checkout.')); ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</div>

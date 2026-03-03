@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Hyva\Theme\ViewModel\ProductListItem">
+        <plugin name="Backendorf_Installment_Plugin_Hyva_Theme_ViewModel_ProductListItem"
+                type="Backendorf\Installment\Plugin\Hyva\Theme\ViewModel\ProductListItem" sortOrder="10"
+                disabled="false"/>
+    </type>
+</config>

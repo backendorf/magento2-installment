@@ -12,40 +12,31 @@ class ConfigProvider
     /**
      * @var Path
      */
-    protected Path $_configPath;
+    private Path $configPath;
 
     /**
      * @var ScopeConfigInterface
      */
-    protected ScopeConfigInterface $_scopeConfig;
-
-    /**
-     * @var Unserialize
-     */
-    protected Unserialize $_unserialize;
+    private ScopeConfigInterface $scopeConfig;
 
     /**
      * @var Json
      */
-    private Json $_serializerJson;
+    private Json $serializerJson;
 
     /**
-     * @param ScopeConfigInterface $ScopeConfig
-     * @param Path $ConfigPath
-     * @param Unserialize $Unserialize
-     * @param Json $SerializerJson
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Path $configPath
+     * @param Json $serializerJson
      */
-    function __construct(
-        ScopeConfigInterface $ScopeConfig,
-        Path                 $ConfigPath,
-        Unserialize          $Unserialize,
-        Json                 $SerializerJson
-    )
-    {
-        $this->_configPath = $ConfigPath;
-        $this->_scopeConfig = $ScopeConfig;
-        $this->_unserialize = $Unserialize;
-        $this->_serializerJson = $SerializerJson;
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        Path                 $configPath,
+        Json                 $serializerJson
+    ) {
+        $this->configPath = $configPath;
+        $this->scopeConfig = $scopeConfig;
+        $this->serializerJson = $serializerJson;
     }
 
     /**
@@ -53,7 +44,7 @@ class ConfigProvider
      */
     public function isModuleEnable(): bool
     {
-        return $this->_scopeConfig->isSetFlag($this->_configPath::MODULE_ENABLE);
+        return $this->scopeConfig->isSetFlag($this->configPath::MODULE_ENABLE);
     }
 
     /**
@@ -61,7 +52,7 @@ class ConfigProvider
      */
     public function getMaximumQuantityInstallments(): int
     {
-        return (int)$this->_scopeConfig->getValue($this->_configPath::MAXIMUM_QUANTITY_INSTALLMENTS);
+        return (int)$this->scopeConfig->getValue($this->configPath::MAXIMUM_QUANTITY_INSTALLMENTS);
     }
 
     /**
@@ -69,7 +60,7 @@ class ConfigProvider
      */
     public function getMinimumInstallmentValue(): float
     {
-        return (float)$this->_scopeConfig->getValue($this->_configPath::MINIMUM_INSTALLMENT_VALUE);
+        return (float)$this->scopeConfig->getValue($this->configPath::MINIMUM_INSTALLMENT_VALUE);
     }
 
     /**
@@ -77,7 +68,7 @@ class ConfigProvider
      */
     public function showAllInstallments(): bool
     {
-        return $this->_scopeConfig->isSetFlag($this->_configPath::SHOW_ALL_INSTALLMENTS_ON_PRODUCT_PAGE);
+        return $this->scopeConfig->isSetFlag($this->configPath::SHOW_ALL_INSTALLMENTS_ON_PRODUCT_PAGE);
     }
 
     /**
@@ -85,7 +76,7 @@ class ConfigProvider
      */
     public function getInterestType(): string
     {
-        return (string)$this->_scopeConfig->getValue($this->_configPath::INTEREST_TYPE);
+        return (string)$this->scopeConfig->getValue($this->configPath::INTEREST_TYPE);
     }
 
     /**
@@ -94,7 +85,7 @@ class ConfigProvider
      */
     public function getInterestRate(int $x): ?float
     {
-        return (float)$this->_scopeConfig->getValue($this->_configPath::INSTALLMENT_INTEREST_X . 'interest_' . $x);
+        return (float)$this->scopeConfig->getValue($this->configPath::INSTALLMENT_INTEREST_X . 'interest_' . $x);
     }
 
     /**
@@ -102,28 +93,30 @@ class ConfigProvider
      */
     public function getDiscounts(): array
     {
-        $value = $this->_scopeConfig->getValue($this->_configPath::DISCOUNTS);
+        $value = $this->scopeConfig->getValue($this->configPath::DISCOUNTS);
 
         if (empty($value)) {
             return [];
         }
 
-        if ($this->isSerialized($value)) {
-            $unserializer = $this->_unserialize;
-        } else {
-            $unserializer = $this->_serializerJson;
+        try {
+            return $this->serializerJson->unserialize($value);
+        } catch (\Exception $e) {
+            // Fallback for serialized data if needed, though Magento 2.2+ should use JSON
+            if ($this->isSerialized($value)) {
+                return unserialize($value);
+            }
+            return [];
         }
-
-        return $unserializer->unserialize($value);
     }
 
     /**
-     * @param $value
+     * @param string|null $value
      * @return bool
      */
     private function isSerialized($value): bool
     {
-        return (boolean)preg_match('/^((s|i|d|b|a|O|C):|N;)/', $value);
+        return $value !== null && (boolean)preg_match('/^((s|i|d|b|a|O|C):|N;)/', $value);
     }
 
     /**
@@ -131,16 +124,9 @@ class ConfigProvider
      */
     public function showFirstInstallment(): bool
     {
-        return $this->_scopeConfig->isSetFlag($this->_configPath::SHOW_FIRST_INSTALLMENT);
+        return $this->scopeConfig->isSetFlag($this->configPath::SHOW_FIRST_INSTALLMENT);
     }
 
-    /**
-     * @return bool
-     */
-    public function bestInstallmentInCart(): bool
-    {
-        return $this->_scopeConfig->isSetFlag($this->_configPath::BEST_INSTALLMENT_IN_CART);
-    }
 
     /**
      * @param string $page
@@ -148,7 +134,7 @@ class ConfigProvider
      */
     public function getPriceTemplate(string $page): string
     {
-        return (string)$this->_scopeConfig->getValue(str_replace('{{page}}', $page, $this->_configPath::PRICE_TEMPLATE));
+        return (string)$this->scopeConfig->getValue(str_replace('{{page}}', $page, $this->configPath::PRICE_TEMPLATE));
     }
 
     /**
@@ -157,9 +143,9 @@ class ConfigProvider
     public function getStyles(): array
     {
         return [
-            'primary-color' => $this->_scopeConfig->getValue($this->_configPath::PRIMARY_COLOR),
-            'highlight-text-color' => $this->_scopeConfig->getValue($this->_configPath::HIGHLIGHT_TEXT_COLOR),
-            'highlight-text-font-weight' => $this->_scopeConfig->getValue($this->_configPath::HIGLIGHT_TEXT_FONT_WEIGHT)
+            'primary-color' => $this->scopeConfig->getValue($this->configPath::PRIMARY_COLOR),
+            'highlight-text-color' => $this->scopeConfig->getValue($this->configPath::HIGHLIGHT_TEXT_COLOR),
+            'highlight-text-font-weight' => $this->scopeConfig->getValue($this->configPath::HIGLIGHT_TEXT_FONT_WEIGHT)
         ];
     }
 }

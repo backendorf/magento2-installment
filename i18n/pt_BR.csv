@@ -1,7 +1,7 @@
 Name,Nome
-Percentage,Percentual
+Percentage,Porcentagem
 Add,Adicionar
-"Missing product parameter on showAllInstallments()","Missing product parameter on showAllInstallments()"
+"Missing product parameter on showAllInstallments()","Parâmetro de produto ausente no método showAllInstallments()"
 Simple,Simples
 Compound,Composto
 1,1
@@ -17,17 +17,16 @@ Compound,Composto
 11,11
 12,12
 "More installment options","Mais opções de parcelamento"
-Calculating...,Calculando...
-"The values presented are for consultation only, the real value of the parcel will be displayed at the end of the order.","Os valores apresentados são apenas para consulta, o valor real da parcela será exibido no fechamento do pedido."
+Calculating...,"Calculando..."
+"The values presented are for consultation only, the real value of the parcel will be displayed at the end of the order.","Os valores apresentados são apenas para consulta; o valor real da parcela será exibido no fechamento do pedido."
 Backendorf,Backendorf
-Installment,Preços adicionais
+Installment,Parcelamento
 General,Geral
 Enabled,Habilitado
 "Maximum quantity installments","Quantidade máxima de parcelas"
 "Minimum installment value","Valor mínimo da parcela"
-"Show all installments on product page","Mostrar todas as opções de parcelamento na página de produto"
-"Show the first installment","Mostrar a primeira parcela"
-"Best installment in cart","Mostrar a parcela mais baixa no carrinho"
+"Show all installments on product page","Exibir todas as opções de parcelamento na página do produto"
+"Show the first installment","Exibir a primeira parcela"
 Interest,Juros
 "Interest type","Tipo de juros"
 2x,2x
@@ -43,16 +42,24 @@ Interest,Juros
 12x,12x
 Discounts,Descontos
 Discount,Desconto
-"Price Templates","Templates de preço"
-"On Category Page","Na página de category"
-"On Search Results","Nos resultados de busca"
-"On Product View","Na página do produto"
-"Discount Template","Template de preço para descontos"
-"In Cart Template","Template de preço no carrinho"
-"All Installment Template","Template de preço para todas as opções de parcelamento"
+"Price Templates","Templates de Preço"
+"On Category Page","Na Página de Categoria"
+"On Search Results","Nos Resultados de Pesquisa"
+"On Product View","Na Exibição do Produto"
+"Discount Template","Template de Desconto"
+"All Installment Template","Template de Todas as Parcelas"
 "Text with interest","Texto com juros"
 "Text free interest","Texto sem juros"
 Styles,Estilos
 "Primary color","Cor primária"
-"Highlight text color","Cor dos textos em destaque"
-"Highlight text font weight","Peso da fonte dos textos em destaque"
+"Highlight text color","Cor do texto em destaque"
+"Highlight text font weight","Peso da fonte do texto em destaque"
+of,de
+in,no
+or,ou
+"interest free","sem juros"
+"(rate of {{rate}} = {{total_interest}}, totaling {{amount}})","(taxa de {{rate}} = {{total_interest}}, totalizando {{amount}})"
+"{{default}} <strong>{{qty}}x</strong> of <strong>{{value}}</strong> {{interest}} {{discounts}}","{{default}} <strong>{{qty}}x</strong> de <strong>{{value}}</strong> {{interest}} {{discounts}}"
+"<strong>{{valueWithDiscount}}</strong> ({{percentage}}) in {{name}}","<strong>{{valueWithDiscount}}</strong> ({{percentage}}) no {{name}}"
+"or <strong>{{qty}}x</strong> of <strong>{{value}}</strong> {{interest}}","ou <strong>{{qty}}x</strong> de <strong>{{value}}</strong> {{interest}}"
+"<strong>{{qty}}x</strong> of <strong>{{value}}</strong> {{interest}}","<strong>{{qty}}x</strong> de <strong>{{value}}</strong> {{interest}}"

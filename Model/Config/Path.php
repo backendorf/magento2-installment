@@ -14,7 +14,6 @@ class Path
     const INSTALLMENT_INTEREST_X = self::BASE_PATH . '/interest/';
     const DISCOUNTS = self::BASE_PATH . '/discounts/discounts';
     const SHOW_FIRST_INSTALLMENT = self::BASE_PATH . '/general/show_first_installment';
-    const BEST_INSTALLMENT_IN_CART = self::BASE_PATH . '/general/best_installment_in_cart';
     const PRICE_TEMPLATE = self::BASE_PATH . '/price_templates/{{page}}';
     const PRIMARY_COLOR = self::BASE_PATH . '/styles/primary_color';
     const HIGHLIGHT_TEXT_COLOR = self::BASE_PATH . '/styles/highlight_text_color';
