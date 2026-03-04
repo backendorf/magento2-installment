@@ -1,17 +1,11 @@
 <?xml version="1.0"?>
-<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="content">
-            <referenceContainer name="product.info.main">
-                <block
-                    class="Backendorf\Installment\Block\AllInstallments"
-                    name="installments"
-                    template="Backendorf_Installment::all_installments.phtml"
-                    after="-"
-                    ifconfig="backendorf_installment/general/is_enabled"
-                />
-            </referenceContainer>
+        <referenceContainer name="product.info.main">
+            <block class="Backendorf\Installment\Block\AllInstallments" 
+                   name="product.installment.all" 
+                   template="Backendorf_Installment::pdp-installments.phtml" 
+                   after="product.info.price" />
         </referenceContainer>
     </body>
 </page>

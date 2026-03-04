@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Backendorf\Installment\Helper;
 
 use \Backendorf\Installment\Model\Config\ConfigProvider;
+use Magento\Catalog\Model\Product;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
 use \Magento\Framework\Pricing\PriceCurrencyInterface;
@@ -13,27 +14,27 @@ class Data extends AbstractHelper
     /**
      * @var ConfigProvider
      */
-    protected ConfigProvider $_configProvider;
+    private ConfigProvider $configProvider;
 
     /**
      * @var PriceCurrencyInterface
      */
-    protected PriceCurrencyInterface $_priceCurrency;
+    private PriceCurrencyInterface $priceCurrency;
 
     /**
      * @param Context $context
-     * @param ConfigProvider $ConfigProvider
-     * @param PriceCurrencyInterface $PriceCurrency
+     * @param ConfigProvider $configProvider
+     * @param PriceCurrencyInterface $priceCurrency
      */
     public function __construct(
         Context                $context,
-        ConfigProvider         $ConfigProvider,
-        PriceCurrencyInterface $PriceCurrency
+        ConfigProvider         $configProvider,
+        PriceCurrencyInterface $priceCurrency
     )
     {
         parent::__construct($context);
-        $this->_configProvider = $ConfigProvider;
-        $this->_priceCurrency = $PriceCurrency;
+        $this->configProvider = $configProvider;
+        $this->priceCurrency = $priceCurrency;
     }
 
     /**
@@ -41,66 +42,62 @@ class Data extends AbstractHelper
      */
     public function getConfig(): array
     {
-        $config = [];
-        $config['enabled'] = $this->_configProvider->isModuleEnable();
-        $config['interest_type'] = $this->_configProvider->getInterestType();
-        $config['maximum_quantity_installments'] = $this->_configProvider->getMaximumQuantityInstallments();
-        $config['minimum_installment_value'] = $this->_configProvider->getMinimumInstallmentValue();
-        $config['discounts'] = $this->_configProvider->getDiscounts();
-        $config['best_installment_in_cart'] = $this->_configProvider->bestInstallmentInCart();
-        $config['interest'] = [];
-        $config['currency_symbol'] = $this->_priceCurrency->getCurrencySymbol();
-        $config['show_first_installment'] = $this->_configProvider->showFirstInstallment();
-        $config['templates'] = [
-            'catalog_category_view' => $this->_configProvider->getPriceTemplate('catalog_category_view'),
-            'catalogsearch_result_index' => $this->_configProvider->getPriceTemplate('catalogsearch_result_index'),
-            'catalog_product_view' => $this->_configProvider->getPriceTemplate('catalog_product_view'),
-            'discount_template' => $this->_configProvider->getPriceTemplate('discount_template'),
-            'all_installment_template' => $this->_configProvider->getPriceTemplate('all_installment_template'),
-            'in_cart_template' => $this->_configProvider->getPriceTemplate('in_cart_template'),
-            'text_free_interest' => $this->_configProvider->getPriceTemplate('text_free_interest'),
-            'text_with_interest' => $this->_configProvider->getPriceTemplate('text_with_interest')
+        $config = [
+            'enabled' => $this->configProvider->isModuleEnable(),
+            'interest_type' => $this->configProvider->getInterestType(),
+            'maximum_quantity_installments' => $this->configProvider->getMaximumQuantityInstallments(),
+            'minimum_installment_value' => $this->configProvider->getMinimumInstallmentValue(),
+            'discounts' => $this->configProvider->getDiscounts(),
+            'interest' => [],
+            'currency_symbol' => $this->priceCurrency->getCurrencySymbol(),
+            'show_first_installment' => $this->configProvider->showFirstInstallment(),
+            'templates' => [
+                'catalog_category_view' => $this->configProvider->getPriceTemplate('catalog_category_view'),
+                'catalogsearch_result_index' => $this->configProvider->getPriceTemplate('catalogsearch_result_index'),
+                'catalog_product_view' => $this->configProvider->getPriceTemplate('catalog_product_view'),
+                'discount_template' => $this->configProvider->getPriceTemplate('discount_template'),
+                'all_installment_template' => $this->configProvider->getPriceTemplate('all_installment_template'),
+                'text_free_interest' => $this->configProvider->getPriceTemplate('text_free_interest'),
+                'text_with_interest' => $this->configProvider->getPriceTemplate('text_with_interest')
+            ]
         ];
 
-        for ($i = 1; $i < 13; $i++) {
-            $config['interest'][$i] = (double)$this->_configProvider->getInterestRate($i);
+        $maxInstallments = $config['maximum_quantity_installments'];
+        for ($i = 1; $i <= $maxInstallments; $i++) {
+            $config['interest'][$i] = (float)$this->configProvider->getInterestRate($i);
         }
 
         return $config;
     }
 
     /**
-     * @param $product
+     * @param Product $product
      * @return bool
      */
-    public function showAllInstallments($product): bool
+    public function showAllInstallments(Product $product): bool
     {
-        if (!$this->_configProvider->isModuleEnable() || !$this->_configProvider->showAllInstallments()) {
-            return false;
-        }
-
-        if (!$product) {
-            $this->_logger->alert(__('Missing product parameter on showAllInstallments()'));
+        if (!$this->configProvider->isModuleEnable() || !$this->configProvider->showAllInstallments()) {
             return false;
         }
 
         $productPrice = $this->getProductPrice($product);
-        $minInstallment = $this->_configProvider->getMinimumInstallmentValue();
+        $minInstallment = $this->configProvider->getMinimumInstallmentValue();
 
-        if (($productPrice < $minInstallment)) {
-            return false;
-        }
-
-        return true;
+        return $productPrice >= $minInstallment;
     }
 
     /**
-     * @param $product
+     * @param Product $product
      * @return float
      */
-    private function getProductPrice($product): float
+    private function getProductPrice(Product $product): float
     {
-        return (float)($product->getMinimalPrice()) ? $product->getMinimalPrice() : $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+        $minimalPrice = $product->getMinimalPrice();
+        if ($minimalPrice > 0) {
+            return $minimalPrice;
+        }
+
+        return (float)$product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
     }
 
     /**
@@ -108,6 +105,6 @@ class Data extends AbstractHelper
      */
     public function getStyles(): array
     {
-        return $this->_configProvider->getStyles();
+        return $this->configProvider->getStyles();
     }
 }

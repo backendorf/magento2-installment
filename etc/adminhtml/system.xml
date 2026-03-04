@@ -42,12 +42,6 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="best_installment_in_cart" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5"
-                       translate="label" type="select">
-                    <label>Best installment in cart</label>
-                    <comment/>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
             </group>
             <group id="interest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
                 <label>Interest</label>
@@ -159,12 +153,6 @@
                     <label>Discount Template</label>
                     <validate>required-entry</validate>
                     <comment><![CDATA[Options: {{valueWithDiscount}}{{percentage}}{{name}}]]></comment>
-                </field>
-                <field id="in_cart_template" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5"
-                       translate="label" type="textarea" canRestore="1">
-                    <label>In Cart Template</label>
-                    <validate>required-entry</validate>
-                    <comment><![CDATA[Options: {{qty}}{{value}}{{interest}}]]></comment>
                 </field>
                 <field id="all_installment_template" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6"
                        translate="label" type="textarea" canRestore="1">
