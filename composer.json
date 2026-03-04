@@ -1,7 +1,8 @@
 {
     "name": "backendorf/module-installment",
-    "description": "Add installment feature to Magento 2",
+    "description": "Add installment feature to Magento 2 catalog",
     "type": "magento2-module",
+    "version": "2.0.0",
     "minimum-stability": "dev",
     "require": {
         "magento/framework": "*",
