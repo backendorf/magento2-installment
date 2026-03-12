@@ -22,16 +22,15 @@ class Data extends AbstractHelper
     private PriceCurrencyInterface $priceCurrency;
 
     /**
-     * @param Context $context
-     * @param ConfigProvider $configProvider
+     * @param Context                $context
+     * @param ConfigProvider         $configProvider
      * @param PriceCurrencyInterface $priceCurrency
      */
     public function __construct(
         Context                $context,
         ConfigProvider         $configProvider,
         PriceCurrencyInterface $priceCurrency
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->configProvider = $configProvider;
         $this->priceCurrency = $priceCurrency;
@@ -71,7 +70,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param Product $product
+     * @param  Product $product
      * @return bool
      */
     public function showAllInstallments(Product $product): bool
@@ -87,7 +86,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param Product $product
+     * @param  Product $product
      * @return float
      */
     private function getProductPrice(Product $product): float

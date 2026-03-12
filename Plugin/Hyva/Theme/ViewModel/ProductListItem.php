@@ -16,16 +16,15 @@ class ProductListItem
      */
     public function __construct(
         LayoutInterface $layout
-    )
-    {
+    ) {
         $this->layout = $layout;
     }
 
     /**
-     * @param \Hyva\Theme\ViewModel\ProductListItem $subject
-     * @param \Closure $proceed
-     * @param Product $product
-     * @param array $priceRendererBlockArgs
+     * @param  \Hyva\Theme\ViewModel\ProductListItem $subject
+     * @param  \Closure                              $proceed
+     * @param  Product                               $product
+     * @param  array                                 $priceRendererBlockArgs
      * @return string
      */
     public function aroundGetProductPriceHtml(
@@ -33,8 +32,7 @@ class ProductListItem
         \Closure                              $proceed,
         Product                               $product,
         array                                 $priceRendererBlockArgs = []
-    ): string
-    {
+    ): string {
         $result = $proceed($product, $priceRendererBlockArgs);
 
         $customHtml = $this->layout
