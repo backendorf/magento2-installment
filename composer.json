@@ -5,8 +5,8 @@
     "version": "2.0.0",
     "minimum-stability": "dev",
     "require": {
-        "magento/framework": "*",
-        "magento/module-catalog": "*"
+        "magento/framework": "^102.0 || ^103.0",
+        "magento/module-catalog": "^103.0 || ^104.0"
     },
     "autoload": {
         "psr-4": {
