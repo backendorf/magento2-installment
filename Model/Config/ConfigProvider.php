@@ -26,8 +26,8 @@ class ConfigProvider
 
     /**
      * @param ScopeConfigInterface $scopeConfig
-     * @param Path $configPath
-     * @param Json $serializerJson
+     * @param Path                 $configPath
+     * @param Json                 $serializerJson
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -80,7 +80,7 @@ class ConfigProvider
     }
 
     /**
-     * @param int $x
+     * @param  int $x
      * @return float|null
      */
     public function getInterestRate(int $x): ?float
@@ -111,7 +111,7 @@ class ConfigProvider
     }
 
     /**
-     * @param string|null $value
+     * @param  string|null $value
      * @return bool
      */
     private function isSerialized($value): bool
@@ -129,7 +129,7 @@ class ConfigProvider
 
 
     /**
-     * @param string $page
+     * @param  string $page
      * @return string
      */
     public function getPriceTemplate(string $page): string

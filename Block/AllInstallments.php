@@ -24,18 +24,18 @@ class AllInstallments extends View
     private helperData $helperData;
 
     /**
-     * @param helperData $helperData
-     * @param Context $context
-     * @param urlEncoder $urlEncoder
-     * @param jsonEncoder $jsonEncoder
-     * @param StringUtils $stringUtils
-     * @param Product $productHelper
-     * @param ConfigInterface $productTypeConfig
-     * @param FormatInterface $localeFormat
-     * @param Session $customerSession
+     * @param helperData                 $helperData
+     * @param Context                    $context
+     * @param urlEncoder                 $urlEncoder
+     * @param jsonEncoder                $jsonEncoder
+     * @param StringUtils                $stringUtils
+     * @param Product                    $productHelper
+     * @param ConfigInterface            $productTypeConfig
+     * @param FormatInterface            $localeFormat
+     * @param Session                    $customerSession
      * @param ProductRepositoryInterface $productRepository
-     * @param PriceCurrencyInterface $priceCurrency
-     * @param array $data
+     * @param PriceCurrencyInterface     $priceCurrency
+     * @param array                      $data
      */
     public function __construct(
         helperData                 $helperData,

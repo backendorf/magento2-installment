@@ -10,8 +10,8 @@ use Magento\Framework\View\Element\Template;
 class Price
 {
     /**
-     * @param AbstractBlock $subject
-     * @param string $result
+     * @param  AbstractBlock $subject
+     * @param  string        $result
      * @return string
      */
     public function afterToHtml(AbstractBlock $subject, $result)
