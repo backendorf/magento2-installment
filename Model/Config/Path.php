@@ -17,5 +17,5 @@ class Path
     const PRICE_TEMPLATE = self::BASE_PATH . '/price_templates/{{page}}';
     const PRIMARY_COLOR = self::BASE_PATH . '/styles/primary_color';
     const HIGHLIGHT_TEXT_COLOR = self::BASE_PATH . '/styles/highlight_text_color';
-    const HIGLIGHT_TEXT_FONT_WEIGHT = self::BASE_PATH . '/styles/highlight_text_font_weight';
+    const HIGHLIGHT_TEXT_FONT_WEIGHT = self::BASE_PATH . '/styles/highlight_text_font_weight';
 }

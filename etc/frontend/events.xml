@@ -3,8 +3,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="hyva_config_generate_before">
         <observer
-            name="Backendorf_Installment_Register_Hyva_Config"
-            instance="Backendorf\Installment\Observer\RegisterModuleForHyvaConfig"
+                name="Backendorf_Installment_Register_Hyva_Config"
+                instance="Backendorf\Installment\Observer\RegisterModuleForHyvaConfig"
         />
     </event>
 </config>

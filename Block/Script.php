@@ -16,14 +16,15 @@ class Script extends Template
 
     /**
      * @param Context $Context
-     * @param Data    $HelperData
-     * @param array   $Data
+     * @param Data $HelperData
+     * @param array $Data
      */
     public function __construct(
-        Context $Context,
-        Data    $HelperData,
-        array   $Data = []
-    ) {
+            Context $Context,
+            Data    $HelperData,
+            array   $Data = []
+    )
+    {
         $this->_helperData = $HelperData;
         parent::__construct($Context, $Data);
     }
