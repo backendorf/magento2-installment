@@ -1,7 +1,4 @@
 module.exports = {
-    content: [
-        '../templates/**/*.phtml',
-    ],
-    safelist: []
+    content: ['../templates/**/*.phtml',], safelist: []
 }
 

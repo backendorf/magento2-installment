@@ -13,7 +13,7 @@ class RegisterModuleForHyvaConfig implements ObserverInterface
     /**
      * @var ComponentRegistrarInterface
      */
-    private $componentRegistrar;
+    private ComponentRegistrarInterface $componentRegistrar;
 
     /**
      * @param ComponentRegistrarInterface $componentRegistrar
@@ -24,7 +24,7 @@ class RegisterModuleForHyvaConfig implements ObserverInterface
     }
 
     /**
-     * @param  Observer $observer
+     * @param Observer $observer
      * @return void
      */
     public function execute(Observer $observer): void
@@ -33,12 +33,12 @@ class RegisterModuleForHyvaConfig implements ObserverInterface
         $extensions = $config->getData('extensions') ?? [];
 
         $path = $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Backendorf_Installment');
-        
+
         // Remove BP since Hyva expects paths relative to the root
         $relativePaths = str_replace(BP . DIRECTORY_SEPARATOR, '', $path);
 
         $extensions[] = [
-            'src' => $relativePaths
+                'src' => $relativePaths
         ];
 
         $config->setData('extensions', $extensions);

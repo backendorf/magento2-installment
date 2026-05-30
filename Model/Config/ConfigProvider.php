@@ -145,7 +145,7 @@ class ConfigProvider
         return [
             'primary-color' => $this->scopeConfig->getValue($this->configPath::PRIMARY_COLOR),
             'highlight-text-color' => $this->scopeConfig->getValue($this->configPath::HIGHLIGHT_TEXT_COLOR),
-            'highlight-text-font-weight' => $this->scopeConfig->getValue($this->configPath::HIGLIGHT_TEXT_FONT_WEIGHT)
+            'highlight-text-font-weight' => $this->scopeConfig->getValue($this->configPath::HIGHLIGHT_TEXT_FONT_WEIGHT)
         ];
     }
 }

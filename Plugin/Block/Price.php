@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Backendorf\Installment\Plugin\Block;
 
+use Hyva\Theme\ViewModel\HyvaCsp;
 use Magento\Framework\View\Element\AbstractBlock;
 use Backendorf\Installment\Block\AllInstallments;
 use Magento\Framework\View\Element\Template;
@@ -10,9 +11,10 @@ use Magento\Framework\View\Element\Template;
 class Price
 {
     /**
-     * @param  AbstractBlock $subject
-     * @param  string        $result
-     * @return string
+     * @param AbstractBlock $subject
+     * @param $result
+     * @return mixed|string
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function afterToHtml(AbstractBlock $subject, $result)
     {
@@ -21,7 +23,7 @@ class Price
         }
 
         // Only inject via Plugin if it's a Hyva theme context
-        if (!class_exists(\Hyva\Theme\ViewModel\HyvaCsp::class)) {
+        if (!class_exists(HyvaCsp::class)) {
             return $result;
         }
 
@@ -31,10 +33,10 @@ class Price
         }
 
         $allInstallmentsBlock = $layout->createBlock(
-            AllInstallments::class,
-            'product.info.installments'
+                AllInstallments::class,
+                'product.info.installments'
         );
-        
+
         if ($allInstallmentsBlock) {
             $allInstallmentsBlock->setTemplate('Backendorf_Installment::hyva/pdp-installments.phtml');
             return $result . $allInstallmentsBlock->toHtml();

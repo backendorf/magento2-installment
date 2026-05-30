@@ -20,9 +20,9 @@ if (!$product || !$product->getId()) {
 $finalPrice = 0;
 if ($product->getPriceInfo()) {
     $finalPrice = (float)$product->getPriceInfo()
-        ->getPrice('final_price')
-        ->getAmount()
-        ->getValue();
+            ->getPrice('final_price')
+            ->getAmount()
+            ->getValue();
 } else {
     $finalPrice = (float)$product->getFinalPrice();
 }

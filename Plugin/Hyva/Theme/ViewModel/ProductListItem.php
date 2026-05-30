@@ -15,31 +15,33 @@ class ProductListItem
      * @param LayoutInterface $layout
      */
     public function __construct(
-        LayoutInterface $layout
-    ) {
+            LayoutInterface $layout
+    )
+    {
         $this->layout = $layout;
     }
 
     /**
-     * @param  \Hyva\Theme\ViewModel\ProductListItem $subject
-     * @param  \Closure                              $proceed
-     * @param  Product                               $product
-     * @param  array                                 $priceRendererBlockArgs
+     * @param \Hyva\Theme\ViewModel\ProductListItem $subject
+     * @param \Closure $proceed
+     * @param Product $product
+     * @param array $priceRendererBlockArgs
      * @return string
      */
     public function aroundGetProductPriceHtml(
-        \Hyva\Theme\ViewModel\ProductListItem $subject,
-        \Closure                              $proceed,
-        Product                               $product,
-        array                                 $priceRendererBlockArgs = []
-    ): string {
+            \Hyva\Theme\ViewModel\ProductListItem $subject,
+            \Closure                              $proceed,
+            Product                               $product,
+            array                                 $priceRendererBlockArgs = []
+    ): string
+    {
         $result = $proceed($product, $priceRendererBlockArgs);
 
         $customHtml = $this->layout
-            ->createBlock(Template::class)
-            ->setTemplate('Backendorf_Installment::hyva/list-item-price.phtml')
-            ->setData('product', $product)
-            ->toHtml();
+                ->createBlock(Template::class)
+                ->setTemplate('Backendorf_Installment::hyva/list-item-price.phtml')
+                ->setData('product', $product)
+                ->toHtml();
 
         return $result . $customHtml;
     }

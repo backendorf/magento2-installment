@@ -13,18 +13,18 @@ class Discounts extends AbstractFieldArray
     protected function _prepareToRender(): void
     {
         $this->addColumn(
-            'name',
-            [
-                'label' => __('Name'),
-                'class' => 'required-entry'
-            ]
+                'name',
+                [
+                        'label' => __('Name'),
+                        'class' => 'required-entry'
+                ]
         );
         $this->addColumn(
-            'percentage',
-            [
-                'label' => __('Percentage'),
-                'class' => 'required-entry validate-currency-dollar'
-            ]
+                'percentage',
+                [
+                        'label' => __('Percentage'),
+                        'class' => 'required-entry validate-currency-dollar'
+                ]
         );
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add');

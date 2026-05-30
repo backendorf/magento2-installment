@@ -13,14 +13,14 @@ class InterestType implements ArrayInterface
     public function toOptionArray(): array
     {
         return [
-            [
-                'value' => 'simple',
-                'label' => __('Simple')
-            ],
-            [
-                'value' => 'compound',
-                'label' => __('Compound')
-            ]
+                [
+                        'value' => 'simple',
+                        'label' => __('Simple')
+                ],
+                [
+                        'value' => 'compound',
+                        'label' => __('Compound')
+                ]
         ];
     }
 
@@ -30,8 +30,8 @@ class InterestType implements ArrayInterface
     public function toArray(): array
     {
         return [
-            'simples' => __('Simple'),
-            'compound' => __('Compound')
+                'simples' => __('Simple'),
+                'compound' => __('Compound')
         ];
     }
 }

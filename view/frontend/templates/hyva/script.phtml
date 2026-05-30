@@ -21,6 +21,7 @@ $styles = $this->helper(Data::class)->getStyles() ?? [];
         --bi-highlight-text-color: <?= $block->escapeHtml($styles['highlight-text-color'] ?? '#000000'); ?>;
         --bi-highlight-text-font-weight: <?= $block->escapeHtml($styles['highlight-text-font-weight'] ?? '600'); ?>;
     }
+
     .installments .best-installment strong,
     .installments .discounts strong {
         color: var(--bi-highlight-text-color);
@@ -63,7 +64,7 @@ $styles = $this->helper(Data::class)->getStyles() ?? [];
                 if (!this.bestInstallment) return '';
 
                 const template = this.config.templates[this.templateType]
-                    ?? this.config.templates.catalog_category_view;
+                        ?? this.config.templates.catalog_category_view;
 
                 return this.renderTemplate(template, {
                     default: '',
@@ -80,7 +81,7 @@ $styles = $this->helper(Data::class)->getStyles() ?? [];
                     if (price === null) {
                         if (!this.productId) return;
                         let priceElement = document.querySelector(
-                            '[data-price-box="product-id-' + this.productId + '"] [data-price-type="finalPrice"]'
+                                '[data-price-box="product-id-' + this.productId + '"] [data-price-type="finalPrice"]'
                         );
                         if (!priceElement) return;
                         price = parseFloat(priceElement.getAttribute('data-price-amount'));
@@ -246,8 +247,8 @@ $styles = $this->helper(Data::class)->getStyles() ?? [];
                 if (!installment) return '';
 
                 const template = installment.hasInterest
-                    ? this.config.templates.text_with_interest
-                    : this.config.templates.text_free_interest;
+                        ? this.config.templates.text_with_interest
+                        : this.config.templates.text_free_interest;
 
                 return this.renderTemplate(template, {
                     amount: installment.amount,
@@ -299,9 +300,9 @@ $styles = $this->helper(Data::class)->getStyles() ?? [];
     }
 
     window.addEventListener(
-        'alpine:init',
-        () => Alpine.data('initInstallment', initInstallment),
-        {once: true}
+            'alpine:init',
+            () => Alpine.data('initInstallment', initInstallment),
+            {once: true}
     );
 </script>
 
